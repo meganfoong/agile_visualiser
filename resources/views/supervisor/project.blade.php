@@ -59,7 +59,7 @@
                     @foreach ($item->users as $assign)
                     <li>
                         @if ($assign->is_supervisor = 0)
-                        <img alt="{{$assign->name}}" class="avatar" src=".jpg" />
+                            <img alt="{{$assign->first_name}}" class="avatar" src=".jpg" />
                         @endif
                     </li>
                     @endforeach
