@@ -53,7 +53,7 @@
         <div class="form-group">
             @foreach ($users as $user)
                 @if ($user->is_supervisor == 0)  
-                <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->name}}<br>
+                <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br>
                 @endif
             @endforeach
         </div>
