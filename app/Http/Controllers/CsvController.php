@@ -74,7 +74,8 @@ class CsvController extends Controller
             	
                "userid"=>(int)$importData[0],
                "is_supervisor"=>0,
-               "name"=>$importData[1],
+               "first_name"=>$importData[1],
+               "last_name"=>$importData[2],
                "email"=>"$importData[0]@student.westernsydney.edu.au",
                "email_verified_at"=>now(),
                "password"=>"password1",
