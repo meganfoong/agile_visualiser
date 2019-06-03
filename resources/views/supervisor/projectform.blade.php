@@ -46,20 +46,17 @@
     </div>
     <!-- Details end -->
 
-    {{-- <!-- Student tab starts here -->
+    <!-- Student tab starts here -->
     <div class="tab-pane fade" id="project_students" role="tabpanel" aria-labelledby="nav-project_students-tab">
         <input class="form-control" id="myInput" type="text" placeholder="Filter Students">
         <br>
         <div class="form-group">
-            <input type="checkbox" name="student" value="user"> Megan Foong<br>
-            <input type="checkbox" name="student" value="user"> Derryn Alfred<br>
-            <input type="checkbox" name="student" value="user"> Jammy Leabres<br>
-            <input type="checkbox" name="student" value="user"> Jawad Shafiq<br>
-            <input type="checkbox" name="student" value="user"> Benan Ergen<br>
-            <input type="checkbox" name="student" value="user"> Christopher Sabat<br>
-            <input type="checkbox" name="student" value="user"> Han-Te Tsai<br>
-            <input type="checkbox" name="student" value="user"> Hussein Samman<br><br>
+            @foreach ($users as $user)
+                @if ($user->is_supervisor == 0)  
+                <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br>
+                @endif
+            @endforeach
         </div>
     </div>
-    <!-- Student end --> --}}
+    <!-- Student end -->
 </div>

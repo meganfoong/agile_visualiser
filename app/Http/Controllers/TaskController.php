@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
-use App\User;
 use Illuminate\Http\Request;
+use App\Task;
+use App\Project;
 
-class SupervisorController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    
     public function index()
     {
-        $projects = Project::all();
-        $users = User::all();
-        return view('supervisor.index',compact('projects','users'));
+        
     }
 
     /**
@@ -40,7 +36,10 @@ class SupervisorController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        Task::create($request->all());
+
+        return back(); 
     }
 
     /**
@@ -49,9 +48,11 @@ class SupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $tasks, $id)
     {
+        $tasks = Task::with('parent')->where('parent_id', $id)->get();
         
+        return view('task.index',compact('tasks'));
     }
 
     /**
@@ -72,9 +73,13 @@ class SupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $task = Task::findOrFail($request->taskid);
+        
+        $task->update($request->all());
+  
+        return back();
     }
 
     /**
@@ -83,8 +88,12 @@ class SupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $task = Task::findOrFail($request->taskid);
+
+        $task->delete();
+       
+        return back();
     }
 }
