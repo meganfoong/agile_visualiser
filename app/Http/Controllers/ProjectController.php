@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
 use App\Project;
-
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -16,9 +14,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //$projects=Project::where('user_id', auth()->id())->get();
-
-        //return view('project.index',compact('projects'));
+        return view('project.index');
     }
 
     /**
@@ -39,10 +35,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        Project::create($request->all());
 
-        $project = Project::create($request->all());
-        //dd($project);
-        $project->users()->sync($request->student);
         return back(); 
     }
 
@@ -52,12 +46,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $tasks, $id)
+    public function show($id)
     {
-        $tasks = Task::with('projects')->where('project_id', $id)->get();
-        
-
-        return view('project.index',compact('tasks'));
+        return view('project.index');
     }
 
     /**
@@ -80,7 +71,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request)
     {
-        $project = Project::findOrFail($request->projectid);
+        $project = Project::findOrFail($request->project_id);
 
         $project->update($request->all());
        

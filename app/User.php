@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'is_supervisor', 'name', 'studentid', 'email', 'password',
+        'name', 'userid' , 'email', 'password','is_supervisor',
     ];
 
     /**
@@ -26,15 +27,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     public function is_supervisor()
@@ -48,8 +40,12 @@ class User extends Authenticatable
 
     }
 
-    public function projects()
-    {
-        return $this->belongsToMany('App\Project');
-    }
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'userid_verified_at' => 'datetime',
+    ];
 }

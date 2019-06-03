@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Project;
-use App\User;
 use Illuminate\Http\Request;
 
 class SupervisorController extends Controller
@@ -13,13 +12,10 @@ class SupervisorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    
     public function index()
     {
         $projects = Project::all();
-        $users = User::all();
-        return view('supervisor.index',compact('projects','users'));
+        return view('supervisor.index',compact('projects'));
     }
 
     /**
@@ -51,7 +47,7 @@ class SupervisorController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**

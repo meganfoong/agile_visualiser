@@ -12,14 +12,4 @@ class Project extends Model
       ];
     
     public $timestamps = false;
-
-    public function users()
-    {
-        return $this->belongsToMany('App\User');
-    }
-
-    public function tasks()
-    {
-        return $this->hasMany('App\Task');
-    }
 }
