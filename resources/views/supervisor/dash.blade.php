@@ -30,8 +30,27 @@
 
 
 
-        <li class="list-group-item list-group-item-light">
+        {{--<li class="list-group-item list-group-item-light">
             <textarea class="form-control" rows="1" id="comment" placeholder="Enter new comment"></textarea>
+
+         $users = App\Comment->get();
+
+        @foreach($comments as $comment)
+            <li class="list-group-item list-group-item-dark">
+                <i class="material-icons">mode_comment</i>
+                <b>{{ $comment->user->name }}</b> <i>{{ $comment->body }}</i>
+                <div class="float-right">9:19</div>
+            </li>
+        @endforeach --}}
+
+        <form method="post" action="{{ route('comment.add') }}">
+            @csrf
+            <li class="list-group-item list-group-item-light">
+                <input type="text" class="form-control" rows="1" name="comment_body" id="comment" placeholder="Enter new comment"></input>
+                <input type="submit" value="Add comment" class="btn btn-basic">
+            </li>
+        </form>
+
 
 
 

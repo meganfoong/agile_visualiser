@@ -17,12 +17,15 @@
 
 Auth::routes();
 Route::get('/', 'HomeController@index');
+Route::get('/password/studentsetpassword', 'Auth\ForgotPasswordController@showResetForm');
 Route::resource('modal','ModalController');
 Route::resource('supervisor','SupervisorController');
 Route::resource('project','ProjectController');
 
 Route::get('/csv_upload_success', 'CsvController@index'); // localhost:8000/
 Route::post('/uploadFile', 'CsvController@uploadFile');
+
+Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 
 //Route::get('/modal/card/{id}', 'ModalController@show');
 
