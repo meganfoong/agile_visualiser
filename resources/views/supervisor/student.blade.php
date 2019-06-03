@@ -2,11 +2,8 @@
     <div class="col-auto">
         <h3>Student List</h3>
     </div>
-    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_student">
-        <i class="material-icons">
-            add
-        </i>
-    </button>
+    <i class="material-icons">add_box</i>
+    <i class="material-icons">grid_on</i>
     <form class="col">
         <div class="float-right">
             <div class="input-group input-group-round">
@@ -36,9 +33,6 @@
                     <th>PX History</th>
                 </tr>
             </thead>
-
-           
-
             <tbody id="myTable" bgcolor="white">
                 <tr>
                     <td>18220197</td>
@@ -82,42 +76,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
-
-<!-- The Modal for adding students -->
-<div class="modal fade" id="new_student">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h5 class="modal-title">Add students using CSV</h5><br>
-
-                <div class="modal-options">
-                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
-                        <i class="material-icons">
-                            close
-                        </i>
-                        <br>
-                    </button>
-                </div>
-            </div>
-        
-        <!-- Modal Body -->
-        <!-- CSV Message -->
-        <div>
-            @if(Session::has('message'))
-                <p >{{ Session::get('message') }}</p>
-            @endif
-
-            <!--CSV  Form -->
-            <form method='post' action='/uploadFile' enctype='multipart/form-data' >
-                {{ csrf_field() }}
-                <input type='file' name='file' >
-                <input type='submit' name='submit' value='Import'>
-            </form>
-        </div>
-
-        </div>
     </div>
 </div>

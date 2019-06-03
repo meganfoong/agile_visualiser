@@ -16,13 +16,14 @@
 
 
 Auth::routes();
-Route::get('/', 'HomeController@index');
+
 Route::resource('modal','ModalController');
+
+Route::get('/', 'HomeController@index')->middleware('auth');
 Route::resource('supervisor','SupervisorController');
 Route::resource('project','ProjectController');
+Route::resource('task','TaskController');
 
-Route::get('/csv_upload_success', 'CsvController@index'); // localhost:8000/
-Route::post('/uploadFile', 'CsvController@uploadFile');
 
 //Route::get('/modal/card/{id}', 'ModalController@show');
 

@@ -1,10 +1,7 @@
 <div class="row content-list-head">
     <div class="col-auto">
-        
-        @if(Session::has('message'))
-                <p >{{ Session::get('message') }}</p>
-            @endif
-            <h3>Comments</h3>
+        <h3>Comments</h3>
+
     </div>
 
 </div>

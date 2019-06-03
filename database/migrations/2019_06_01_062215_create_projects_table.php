@@ -20,6 +20,8 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
 
 
+
+
         });
     }
 
