@@ -70,6 +70,7 @@ class CsvController extends Controller
                     fclose($file);
 
                     // Insert user to MySQL database
+                    $password = Hash::make('password1');
                     foreach ($importData_arr as $importData) {
 
                         $insertData = array(
@@ -79,7 +80,7 @@ class CsvController extends Controller
                             "last_name" => $importData[2],
                             "email" => "$importData[0]@student.westernsydney.edu.au",
                             "email_verified_at" => now(),
-                            "password" => "password1",
+                            "password" => $password,
                             "created_at" => now(),
                             "updated_at" => now()
                         );

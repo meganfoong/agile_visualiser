@@ -20,7 +20,7 @@
         <div class="card-body">
             <h5 data-filter-by="text">Project Milestones</h5>
             <p data-filter-by="text">
-                <p>15/03/19 - Project Plan <br><br>
+                <p> 15/03/19 - Project Plan <br><br>
                     22/03/19 - Project Proposal <br><br>
                     08/04/19 - Working Prototype <br><br>
                     26/04/19 - Systems Analysis & Design Report <br><br>
