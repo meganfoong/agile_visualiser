@@ -31,9 +31,9 @@
         </div>
 
         <div class="form-label-group">
-            <input type="userid" id="userid" class="form-control @error('userid') is-invalid @enderror" name="userid" required autocomplete="userid" autofocus placeholder="Student ID">
-            <label for="userid">Student ID</label>
-            @error('userid')
+            <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email" required autocomplete="email" autofocus placeholder="Email">
+            <label for="email">Email</label>
+            @error('email')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

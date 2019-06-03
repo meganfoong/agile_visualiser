@@ -39,20 +39,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="userid" class="col-md-4 col-form-label text-md-right">{{ __('User ID') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="userid" type="userid" class="form-control @error('userid') is-invalid @enderror" name="userid" value="{{ old('userid') }}" required autocomplete="userid">
-
-                                    @error('userid')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                            </div>
 
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>

@@ -18,7 +18,7 @@ class LoginController extends Controller
     |
     */
     //
-    protected $username = 'userid';
+
     use AuthenticatesUsers;
 
 
@@ -63,10 +63,6 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function username()
-    {
-        return 'userid';
-    }
 
     public function __construct()
     {
