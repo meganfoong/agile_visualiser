@@ -75,7 +75,7 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->first_name }} <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -94,11 +94,12 @@
                         @endguest
                     </ul>
                 </div>
-
             </nav>
         </div>
         <br>
         @yield('content')
+
+
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
@@ -113,10 +114,12 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         @yield('supervisorNav')
 
                         @yield('projectNav')
+
+                        @yield('taskNav')
 
                         <div class="tab-content" id="myTabContent">
                             <br>
@@ -179,6 +182,25 @@
                                 aria-labelledby="nav-contribution-tab">
                                 <div class="tab-content">
                                     @yield('contribution')
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="myTabContent">
+                            <br>
+                            <!-- Dashboard tab starts here -->
+                            <div class="tab-pane fade show active" id="nav-subtask" role="tabpanel"
+                                aria-labelledby="nav-dashboard-tab">
+                                <div class="tab-content">
+                                    @yield('subtask')
+                                </div>
+                            </div>
+
+                            <!-- Project tab starts here -->
+                            <div class="tab-pane fade" id="nav-other" role="tabpanel"
+                                aria-labelledby="nav-projects-tab">
+                                <div class="tab-content">
+                                    @yield('other')
                                 </div>
                             </div>
                         </div>
