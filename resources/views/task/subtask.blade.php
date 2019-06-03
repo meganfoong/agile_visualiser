@@ -1,6 +1,6 @@
 <div class="row content-list-head">
     <div class="col-auto">
-        <h3>Tasks</h3>
+        <h3>Sub-tasks</h3>
     </div>
 
     <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_task">
@@ -38,7 +38,7 @@
             <div class="card-body">
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
                     data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}"
-                    class="btn btn-sm float-right"
+                    data-myassign="{{$item->assign}}" data-myapprove="{{$item->approve}}" class="btn btn-sm float-right"
                     data-toggle="modal" data-target="#edit_task">
                     <i class="material-icons">
                         more_vert
@@ -46,15 +46,12 @@
                 </button>
 
                 <div class="card-title">
-                    <a href="{{ URL::to('task', $item->id) }}">
-                        <h5 data-filter-by="text">{{ $item->title }}</h5>
-                    </a>
+                    <h5 data-filter-by="text">{{ $item->title }}</h5>
                     <span>{{ $item->description }}</span>
-
-
                 </div>
 
-                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_task">
+                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal"
+                    data-target="#delete_task">
                     <i class="material-icons">
                         delete
                     </i>
@@ -89,7 +86,8 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
 
-                    @include('project.taskform')
+                    @include('task.subtaskform')
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{request()->route('task')}}">
                     <input type="hidden" name="project_id" id="project_id" value="{{request()->route('project')}}">
 
                 </div>
@@ -133,7 +131,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="taskid" id="taskid" value="">
-                    @include('project.taskform')
+                    @include('task.subtaskform')
                 </div>
 
                 <!-- Modal footer -->
@@ -201,13 +199,16 @@
         var title = button.data('mytitle')
         var description = button.data('mydescription')
         var status = button.data('mystatus')
+        var assign = button.data('myassign')
+        var approve = button.data('myapprove')
         var modal = $(this)
 
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #des').val(description);
         modal.find('.modal-body #status').val(status);
-
+        modal.find('.modal-body #aassign').val(assign);
+        modal.find('.modal-body #approve').val(approve);
 
 
     })

@@ -46,6 +46,7 @@
                         more_vert
                     </i>
                 </button>
+                
                 <div class="card-title">
                     <a href="{{ URL::to('project', $item->id) }}">
                         <h5 data-filter-by="text">{{$item->title}}</h5>
@@ -55,32 +56,14 @@
                 </div>
 
                 <ul class="avatars">
+                    @foreach ($item->users as $assign)
                     <li>
-                        <a href="#" data-toggle="tooltip" title="">
-                            <img alt="Megan" class="avatar" src=".jpg" />
-                        </a>
+                        @if ($assign->is_supervisor = 0)
+                        <img alt="{{$assign->name}}" class="avatar" src=".jpg" />
+                        @endif
                     </li>
-
-                    <li>
-                        <a href="#" data-toggle="tooltip" title="">
-                            <img alt="Derryn" class="avatar" src=".jpg" />
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" data-toggle="tooltip" title="">
-                            <img alt="Jawad" class="avatar" src=".jpg" />
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" data-toggle="tooltip" title="">
-                            <img alt="Jammy" class="avatar" src=".jpg" />
-                        </a>
-                    </li>
+                    @endforeach
                 </ul>
-
-                
             </div>
         </div>
     </div>
@@ -169,6 +152,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     @include('supervisor.projectform')
+                    <input type="hidden" name="student[]"  value="{{ Auth::user()->id }} ">
                 </div>
 
                 <!-- Modal footer -->
@@ -192,7 +176,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">New Project</h5><br>
+                <h5 class="modal-title">Update Project</h5><br>
 
                 <div class="modal-options">
                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
@@ -209,7 +193,7 @@
                 {{method_field('PATCH')}}
                 {{ csrf_field() }}
                 <div class="modal-body">
-                    <input type="hidden" name="project_id" id="project_id" value="">
+                    <input type="hidden" name="projectid" id="projectid" value="">
                     @include('supervisor.projectform')
                 </div>
 
@@ -237,7 +221,7 @@
         var group = button.data('mygroup')
         var modal = $(this)
 
-        modal.find('.modal-body #project_id').val(id);
+        modal.find('.modal-body #projectid').val(id);
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #group').val(group);
 
