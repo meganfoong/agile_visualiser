@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
+use Illuminate\Support\Facades\Redirect; 
 
 class HomeController extends Controller
 {
@@ -23,7 +24,14 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {   
+        $id = auth()->id();
+        $user = User::find($id);
+        $projects = $user->projects()->get();
+        foreach ($projects as $project) {
+            $pid = $project->id;
+        }
+ 
         if(auth()->user()->is_supervisor == 1)
         {
             //do this if u dont want the specific route name
@@ -35,7 +43,7 @@ class HomeController extends Controller
         //do this if u dont want the specific route name
         // return view ('home');
         //do this if u want the specific route name
-         return redirect  ('project');
+        return Redirect::to("project/{$pid}");
     }
 
     /**

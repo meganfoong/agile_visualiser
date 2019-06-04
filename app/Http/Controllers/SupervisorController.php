@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
+
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class SupervisorController extends Controller
@@ -17,9 +18,14 @@ class SupervisorController extends Controller
     
     public function index()
     {
-        $projects = Project::all();
+        //$projects = Project::with('users')->where('user_id', $id)->get();
+        //$users = User::all();
+        //$projects = Project::all();
+        //return view('supervisor.index',compact('users'));
+
         $users = User::all();
-        return view('supervisor.index',compact('projects','users'));
+        $projects = Auth::user()->projects;
+        return view('supervisor.index',compact('projects', 'users'));
     }
 
     /**
@@ -49,8 +55,9 @@ class SupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
+
         
     }
 

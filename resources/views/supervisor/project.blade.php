@@ -1,3 +1,4 @@
+
 <div class="row content-list-head">
     <div class="col-auto">
         <h3>Current Projects</h3>
