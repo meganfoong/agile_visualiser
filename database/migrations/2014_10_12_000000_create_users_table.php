@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('userid')->unique()->nullable();
             $table->boolean('is_supervisor')->default(0);
             $table->string('first_name');
             $table->string('last_name');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -53,9 +54,12 @@ class ProjectController extends Controller
     {
     
         $tasks = Task::with('projects')->where('project_id', $id)->get();
-        
+        $users = Auth::user();
 
-        return view('project.index',compact('tasks' ));
+
+        $projects = Auth::user()->projects;
+
+        return view('project.index',compact('tasks', 'users' ));
     }
 
     /**

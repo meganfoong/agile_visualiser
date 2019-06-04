@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-
-
 @section('projectNav')
 <ul class="nav nav-tabs nav-justified">
     <li class="nav-item">
