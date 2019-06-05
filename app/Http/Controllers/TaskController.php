@@ -50,7 +50,7 @@ class TaskController extends Controller
     public function show(Task $tasks, $id)
     {
         $tasks = Task::with('parent')->where('parent_id', $id)->get();
-        
+
         return view('task.index',compact('tasks'));
     }
 

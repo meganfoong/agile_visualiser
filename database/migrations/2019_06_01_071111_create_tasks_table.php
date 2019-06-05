@@ -22,6 +22,7 @@ class CreateTasksTable extends Migration
             $table->string('status');
             $table->string('assign')->nullable();
             $table->string('approve')->nullable();
+            $table->date('due_date')->nullable();
             $table->timestamps();
 
             $table->foreign('parent_id')

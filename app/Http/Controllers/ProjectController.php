@@ -54,12 +54,8 @@ class ProjectController extends Controller
     {
     
         $tasks = Task::with('projects')->where('project_id', $id)->get();
-        $users = Auth::user();
-
-
         $projects = Auth::user()->projects;
-
-        return view('project.index',compact('tasks', 'users' ));
+        return view('project.index',compact('tasks', 'projects' ));
     }
 
     /**

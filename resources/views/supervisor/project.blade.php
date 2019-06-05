@@ -1,31 +1,29 @@
-
-<div class="row content-list-head">
+<div class="content-list-body row">
     <div class="col-auto">
         <h3>Current Projects</h3>
 
 
     </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_project">
+            <i class="material-icons">
+                add
+            </i>
+        </button>
+    </div>
 
-    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_project">
-        <i class="material-icons">
-            add
-        </i>
-    </button>
-
-    <form class="col">
+    <div class="col float-right">
         <div class="float-right">
             <div class="input-group input-group-round">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
+                <div class="input-group-prepend" >
+                    <span class="input-group-text" >
                         <i class="material-icons">filter_list</i>
                     </span>
                 </div>
-
-                <input type="search" class="form-control filter-list-input" placeholder="Filter Projects"
-                    aria-label="Filter Projects">
+                <input type="search" class="form-control filter-list-input" placeholder="Filter Projects" aria-label="Filter Projects">
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <br>
@@ -47,7 +45,7 @@
                         more_vert
                     </i>
                 </button>
-                
+
                 <div class="card-title">
                     <a href="{{ URL::to('project', $item->id) }}">
                         <h5 data-filter-by="text">{{$item->title}}</h5>
@@ -59,8 +57,9 @@
                 <ul class="avatars">
                     @foreach ($item->users as $assign)
                     <li>
-                        @if ($assign->is_supervisor = 0)
-                            <img alt="{{$assign->first_name}}" class="avatar" src=".jpg" />
+                        @if ($assign->is_supervisor == 0)
+                        <img alt="" class="avatar" src="https://ui-avatars.com/api/?name={{$assign->first_name}}+{{$assign->last_name}}&rounded=true&size=25"/>
+                        {{$assign->first_name}} |
                         @endif
                     </li>
                     @endforeach
@@ -153,7 +152,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     @include('supervisor.projectform')
-                    <input type="hidden" name="student[]"  value="{{ Auth::user()->id }} ">
+                    <input type="hidden" name="student[]" value="{{ Auth::user()->id }} ">
                 </div>
 
                 <!-- Modal footer -->

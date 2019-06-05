@@ -57,7 +57,7 @@ class SupervisorController extends Controller
      */
     public function show()
     {
-
+        
         
     }
 

@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 
+
+@section('supervisorCrumbs')
+<li class="breadcrumb-item">
+    <i class="material-icons">
+        home
+    </i>
+</li>
+@endsection
+
+
 @section('supervisorNav')
 <ul class="nav nav-tabs nav-justified">
     <li class="nav-item">

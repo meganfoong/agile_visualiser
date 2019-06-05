@@ -31,14 +31,10 @@
                     <img src="{{ URL::to('/assets/av2.png') }}" width="30" height="" class="img" alt="">
                 </a>
 
-                
-
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
@@ -53,7 +49,17 @@
                         </li>
                         @endif
                         @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+        
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        <!-- <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->first_name }} <span class="caret"></span>
@@ -71,14 +77,10 @@
                                     @csrf
                                 </form>
                             </div>
-                        </li>
+                        </li> -->
                         @endguest
                     </ul>
-
-
                 </div>
-
-
 
                 {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -107,8 +109,7 @@
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();">
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
 
@@ -121,30 +122,33 @@
                 </ul>--}}
             </nav>
             <br>
-            
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    @yield('supervisorCrumbs')
+                    @yield('studentCrumbs')
+                </ol>
+            </nav>
+
         </div>
     </div>
-    
-
 
     @yield('content')
 
-
     <main class="py-4">
-
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-10">
-
-
-
                     <div class="page-header mb-4">
                         <div class="media">
-                            <img alt="Image" src="pic/123.png" class="avatar avatar-lg mt-1" style="width:9%" />
+                            <img class="mr-8" src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}+{{Auth::user()->last_name}}&rounded=true"/>
                             <div class="media-body ml-3">
-                                {{-- <h1 class="mb-0">Rhys Tague</h1> --}}
                                 <h1 class="mb-0"> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</h1>
-                                {{-- <p class="lead">Student</p> --}}
+                                @if(auth()->user()->is_supervisor == 0)
+                                <p class="lead">Student</p>
+                                @elseif (auth()->user()->is_supervisor == 1)
+                                <p class="lead">Supervisor</p>
+                                @endif
                             </div>
                         </div>
                     </div>
