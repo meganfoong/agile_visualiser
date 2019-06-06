@@ -17,6 +17,7 @@
         <div class="card-title">
             <h5 data-filter-by="text">Project Brief</h5>
         </div>
+        {{-- {{ nl2br(e($obj->description)) }} --}}
     </div>
 </div>
 
@@ -69,7 +70,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="taskid" id="taskid" value="">
-                    @include('project.taskform')
+                    @include('project.overviewform')
                 </div>
 
                 <!-- Modal footer -->

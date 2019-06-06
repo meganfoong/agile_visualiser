@@ -50,11 +50,12 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $tasks, $id)
+    public function show(Project $projects, Task $tasks, $id)
     {
     
         $tasks = Task::with('projects')->where('project_id', $id)->get();
-        $projects = Auth::user()->projects;
+        $projects = Project::get()->where('id', $id);
+        //dd($projects);
         return view('project.index',compact('tasks', 'projects' ));
     }
 

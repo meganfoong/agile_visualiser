@@ -37,7 +37,7 @@ class HomeController extends Controller
             //do this if u dont want the specific route name
             //return view ('supervisor');
             //do this if u want the specific route name
-            return redirect  ('supervisor');
+            return redirect ('supervisor');
 
         }
         //do this if u dont want the specific route name
