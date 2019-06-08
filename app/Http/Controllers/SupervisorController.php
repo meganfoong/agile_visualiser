@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\User;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use DB;
 
 class SupervisorController extends Controller
 {
@@ -24,8 +26,10 @@ class SupervisorController extends Controller
         //return view('supervisor.index',compact('users'));
 
         $users = User::all();
+        $comments = Auth::user()->comments;
         $projects = Auth::user()->projects;
-        return view('supervisor.index',compact('projects', 'users'));
+        $students = DB::table('users')->where('is_supervisor', 0)->get();
+        return view('supervisor.index',compact('projects', 'comments', 'users', 'students'));
     }
 
     /**

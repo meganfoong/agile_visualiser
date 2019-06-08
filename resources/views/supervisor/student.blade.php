@@ -40,46 +40,15 @@
            
 
             <tbody id="myTable" bgcolor="white">
-                <tr>
-                    <td>18220197</td>
-                    <td>Megan Foong</td>
+            @foreach ($students as $student)
+                <tr>    
+
+                    <td>{{$student->userid}}</td>
+                    <td>{{$student->first_name}} {{$student->last_name}}</td>
                     <td><i></i></td>
+
                 </tr>
-                <tr>
-                    <td>17072670</td>
-                    <td>Derryn Alfred</td>
-                    <td><a href="">project: vUWS (2018)</td>
-                </tr>
-                <tr>
-                    <td>18603949</td>
-                    <td>Jawad Shafiq</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>17764533</td>
-                    <td>Jammy Leabres</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>18044889</td>
-                    <td>Benan Ergen</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>18607420</td>
-                    <td>Christopher Sabat</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>17344832</td>
-                    <td>Han-Te Tsai</td>
-                    <td><a href="">project: vUWS (2018)</td>
-                </tr>
-                <tr>
-                    <td>18494626</td>
-                    <td>Hussein Samman</td>
-                    <td></td>
-                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -106,9 +75,7 @@
         <!-- Modal Body -->
         <!-- CSV Message -->
         <div>
-            @if(Session::has('message'))
-                <p >{{ Session::get('message') }}</p>
-            @endif
+            
 
             <!--CSV  Form -->
             <form method='post' action='/uploadFile' enctype='multipart/form-data' >
