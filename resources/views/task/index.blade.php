@@ -10,7 +10,9 @@
         </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-        Task
+        @foreach ($task as $item)
+            {{$item->title}}
+        @endforeach
     </li>
     @endsection
 @elseif (auth()->user()->is_supervisor == 1)
@@ -24,11 +26,15 @@
     </li>
     <li class="breadcrumb-item">
         <a href="{{ url()->previous() }}">
-            Project
+            @foreach ($project as $item)
+                {{$item->title}}
+            @endforeach
         </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-        Task
+        @foreach ($task as $item)
+            {{$item->title}}
+        @endforeach
     </li>
     @endsection
 @endif

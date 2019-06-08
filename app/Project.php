@@ -12,7 +12,9 @@ class Project extends Model
         'brief',
         'milestones',
         'supervisorDetails',
-        'clientDetails'
+        'clientDetails',
+        'startDate',
+        'endDate'
       ];
     
     public $timestamps = false;

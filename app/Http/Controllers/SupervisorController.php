@@ -25,6 +25,7 @@ class SupervisorController extends Controller
 
         $users = User::all();
         $projects = Auth::user()->projects;
+
         return view('supervisor.index',compact('projects', 'users'));
     }
 
@@ -46,6 +47,8 @@ class SupervisorController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->projectid);
+        
         
     }
 

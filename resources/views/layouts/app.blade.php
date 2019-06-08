@@ -21,6 +21,15 @@
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
 </head>
 
 <body>
@@ -50,11 +59,11 @@
                         @endif
                         @else
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}"
+                            <a class="nav-link" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
-        
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
@@ -141,7 +150,8 @@
                 <div class="col-lg-11 col-xl-10">
                     <div class="page-header mb-4">
                         <div class="media">
-                            <img class="mr-8" src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}+{{Auth::user()->last_name}}&rounded=true"/>
+                            <img class="mr-8"
+                                src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}+{{Auth::user()->last_name}}&rounded=true" />
                             <div class="media-body ml-3">
                                 <h1 class="mb-0"> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</h1>
                                 @if(auth()->user()->is_supervisor == 0)

@@ -18,7 +18,9 @@
         </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-        Project
+        @foreach ($projects as $item)
+            {{$item->title}}
+        @endforeach
     </li>
     @endsection
 @endif

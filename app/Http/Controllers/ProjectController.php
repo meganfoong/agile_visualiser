@@ -82,6 +82,8 @@ class ProjectController extends Controller
         $project = Project::findOrFail($request->projectid);
 
         $project->update($request->all());
+
+        $project->users()->sync($request->student);
        
         return back();
     }

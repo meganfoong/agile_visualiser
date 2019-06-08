@@ -13,7 +13,9 @@ class Task extends Model
         'status',
         'assign',
         'approve',
-        'parent_id'
+        'parent_id',
+        'startDate',
+        'dueDate'
         
       ];
 

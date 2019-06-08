@@ -21,6 +21,8 @@ class CreateProjectsTable extends Migration
             $table->text('milestones')->nullable();
             $table->text('supervisorDetails')->nullable();
             $table->text('clientDetails')->nullable();
+            $table->date('startDate');
+            $table->date('endDate');
             $table->timestamps();
 
 

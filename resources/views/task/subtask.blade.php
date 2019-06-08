@@ -56,6 +56,10 @@
                         delete
                     </i>
                 </button>
+
+                <div>
+                    <span>Assigned: {{ $item->assign }}</span>
+                </div>
             </div>
 
         </div>
@@ -87,8 +91,8 @@
                 <div class="modal-body">
 
                     @include('task.subtaskform')
-                    <input type="hidden" name="parent_id" id="parent_id" value="{{request()->route('task')}}">
-                    <input type="hidden" name="project_id" id="project_id" value="{{request()->route('project')}}">
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{$tid}}">
+                    <input type="hidden" name="project_id" id="project_id" value="{{$pid}}">
 
                 </div>
 

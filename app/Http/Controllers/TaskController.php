@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Project;
+use Illuminate\Support\Facades\Auth;
 
 
 class TaskController extends Controller
@@ -48,10 +50,38 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Task $tasks, $id)
-    {
+    {   
         $tasks = Task::with('parent')->where('parent_id', $id)->get();
 
-        return view('task.index',compact('tasks'));
+        $parentid = Task::with('parent')->where('id', $id)->get();
+        foreach ($parentid as $item1) {
+            $tid = $item1->id;
+        }
+
+        $task = Task::get()->where('id', $id);
+
+        $projectid = Task::with('projects')->where('id', $id)->get();
+        foreach ($projectid as $item2) {
+            $pid = $item2->project_id;
+        }
+
+        $project = Project::get()->where('id', $pid);
+
+        $assign = Project::with('users')->where('id', $pid)->get();
+        foreach ($assign as $item3) {
+            $aid = $item3->users;
+        }
+        //$a = $aid->where('pivot.project_id', $pid);
+        
+
+        // $assign = Auth::user()->with('projects')->get();
+        // foreach ($assign as $item) {
+        //     $aid = $item->projects;
+        // }
+        // $users = $aid->where('id', $pid);
+        // dd($users);
+
+        return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task'));
     }
 
     /**

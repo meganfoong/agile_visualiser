@@ -39,7 +39,7 @@
             </div>
             <div class="card-body">
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
-                    data-mygroup="{{$item->group}}" class="btn btn-sm float-right" data-toggle="modal"
+                    data-mygroup="{{$item->group}}" data-startDate="{{$item->startDate}}" data-endDate="{{$item->endDate}}" class="btn btn-sm float-right" data-toggle="modal"
                     data-target="#edit_project">
                     <i class="material-icons">
                         more_vert
@@ -51,7 +51,11 @@
                         <h5 data-filter-by="text">{{$item->title}}</h5>
                     </a>
                     <span>{{$item->group}}</span>
-
+                    
+                </div>
+                
+                <div>
+                    <span>Start: {{$item->startDate}} End: {{$item->endDate}}</span>
                 </div>
 
                 <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_project">
@@ -65,7 +69,7 @@
                     <li>
                         @if ($assign->is_supervisor == 0)
                         <img alt="" class="avatar" src="https://ui-avatars.com/api/?name={{$assign->first_name}}+{{$assign->last_name}}&rounded=true&size=25"/>
-                        {{$assign->first_name}} |
+                        {{$assign->first_name}}
                         @endif
                     </li>
                     @endforeach
@@ -200,6 +204,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="projectid" id="projectid" value="">
+                    <input type="hidden" name="student[]" value="{{Auth::user()->id}}">
                     @include('supervisor.projectform')
                 </div>
 
@@ -241,7 +246,7 @@
                 {{method_field('delete')}}
                 {{ csrf_field() }}
                 <div class="modal-body">
-                    <h3>Are you sure you want to delete task?</h3>
+                    <h3>Are you sure you want to delete project?</h3>
                     <input type="hidden" name="projectid" id="projectid" value="">
                 </div>
 
@@ -267,11 +272,15 @@
         var id = button.data('myid')
         var title = button.data('mytitle')
         var group = button.data('mygroup')
+        var startDate = button.data('startDate')
+        var endDate = button.data('endDate')
         var modal = $(this)
 
         modal.find('.modal-body #projectid').val(id);
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #group').val(group);
+        modal.find('.modal-body #startDate').val(startDate);
+        modal.find('.modal-body #endDate').val(endDate);
 
 
     })
@@ -284,6 +293,6 @@
         var id = button.data('myid')
         var modal = $(this)
 
-        modal.find('.modal-body #mod_id').val(id);
+        modal.find('.modal-body #projectid').val(id);
     }) 
 </script>
