@@ -11,8 +11,8 @@ class Project extends Model
         'group',
         'brief',
         'milestones',
-        'supervisor_details',
-        'client_details'
+        'supervisorDetails',
+        'clientDetails'
       ];
     
     public $timestamps = false;

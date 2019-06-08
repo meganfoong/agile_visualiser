@@ -54,6 +54,12 @@
 
                 </div>
 
+                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_project">
+                    <i class="material-icons">
+                        delete
+                    </i>
+                </button>
+
                 <ul class="avatars">
                     @foreach ($item->users as $assign)
                     <li>
@@ -212,6 +218,48 @@
     </div>
 </div>
 
+<!-- The Modal for deleting a task -->
+<div class="modal fade" id="delete_project">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Task</h5><br>
+
+                <div class="modal-options">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
+                        <i class="material-icons">
+                            close
+                        </i>
+                        <br>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <form method="POST" action="{{route('project.destroy', 'redirect')}}" class="was-validated">
+                {{method_field('delete')}}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <h3>Are you sure you want to delete task?</h3>
+                    <input type="hidden" name="projectid" id="projectid" value="">
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="material-icons">
+                                check
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $('#edit_project').on('show.bs.modal', function (event) {
 
@@ -229,7 +277,7 @@
     })
 
 
-    $('#delete').on('show.bs.modal', function (event) {
+    $('#delete_project').on('show.bs.modal', function (event) {
 
         var button = $(event.relatedTarget)
 

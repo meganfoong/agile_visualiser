@@ -9,11 +9,11 @@
 </div>
 
 <div class="form-group">
-    <label for="supervisor">Supervisor Details:</label>
-    <textarea class="form-control" rows="2" id="supervisor" name="supervisor"></textarea>
+    <label for="supervisorDetails">Supervisor Details:</label>
+    <textarea class="form-control" rows="2" id="supervisorDetails" name="supervisorDetails"></textarea>
 </div>
 
 <div class="form-group">
-    <label for="client">Client Details:</label>
-    <textarea class="form-control" rows="2" id="client" name="client"></textarea>
+    <label for="clientDetails">Client Details:</label>
+    <textarea class="form-control" rows="2" id="clientDetails" name="clientDetails"></textarea>
 </div>

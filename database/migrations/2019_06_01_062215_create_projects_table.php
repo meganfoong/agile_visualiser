@@ -19,8 +19,8 @@ class CreateProjectsTable extends Migration
             $table->string('group');
             $table->text('brief')->nullable();
             $table->text('milestones')->nullable();
-            $table->text('supervisor_details')->nullable();
-            $table->text('client_details')->nullable();
+            $table->text('supervisorDetails')->nullable();
+            $table->text('clientDetails')->nullable();
             $table->timestamps();
 
 
