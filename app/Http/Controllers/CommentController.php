@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comment;
+use DB;
 
 class CommentController extends Controller
 {
@@ -24,12 +25,6 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = DB::table('comments')
-                     ->select(DB::raw('user_id, body, created_at'))
-                     //->where('status', '<>', 1)
-                     ->groupBy('created_at')
-                     ->get();
-
-        return view('supervisor', ['comments' => $comments]);
+        
     }
 }

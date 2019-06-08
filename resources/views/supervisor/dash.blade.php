@@ -1,9 +1,9 @@
-<div class="row content-list-head">
+@if(Session::has('message'))
+                <div class="alert alert-success"><p>{{ Session::get('message') }}</p></div>
+            @endif<div class="row content-list-head">
     <div class="col-auto">
         
-        @if(Session::has('message'))
-                <p >{{ Session::get('message') }}</p>
-            @endif
+        
             <h3>Comments</h3>
     </div>
 
@@ -16,32 +16,13 @@
         <li class="list-group-item list-group-item-action"><b>Recent Comments</b>
             <div class="float-right"><i class="material-icons">keyboard_arrow_up</i>
 
-        <li class="list-group-item list-group-item-dark">
-            <i class="material-icons">mode_comment</i>
-            <b>Rhys @ Derryn</b> <i>dfgfdgfdgsd fsdf dsf fdgfds fds dgfdgfdg</i>
-            <div class="float-right">Just now</div>
-        </li>
-
-        <li class="list-group-item list-group-item-dark">
-            <i class="material-icons">mode_comment</i>
-            <b>Derryn</b> <i>rfdgfdgfdg sdfdsf sdf sdf dsf fdgfdgfdg</i>
-            <div class="float-right">9:19</div>
-        </li>
-
-
-
-        {{--<li class="list-group-item list-group-item-light">
-            <textarea class="form-control" rows="1" id="comment" placeholder="Enter new comment"></textarea>
-
-         $users = App\Comment->get();
-
         @foreach($comments as $comment)
             <li class="list-group-item list-group-item-dark">
                 <i class="material-icons">mode_comment</i>
-                <b>{{ $comment->user->name }}</b> <i>{{ $comment->body }}</i>
-                <div class="float-right">9:19</div>
+                <b>{{ $comment->user->first_name }}</b> <i>{{ $comment->body }}</i>
+                <div class="float-right">{{ $comment->created_at }}</div>
             </li>
-        @endforeach --}}
+        @endforeach 
 
         <form method="post" action="{{ route('comment.add') }}">
             @csrf
@@ -63,7 +44,7 @@
 
 <div class="row content-list-head">
     <div class="col-auto">
-        <h3>Recent Activties</h3>
+        <h3>Recent Activities</h3>
 
     </div>
     <form class="col">
