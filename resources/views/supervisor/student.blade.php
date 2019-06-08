@@ -28,30 +28,58 @@
     <div class="card-body">
 
         <table class="table table-hover table-borderless table-sm">
+
             <thead>
                 <tr>
-                    <th>Student</th>
+                    <th>Student ID</th>
                     <th>Name</th>
                     <th>PX History</th>
                 </tr>
             </thead>
-     
+
+           
+
             <tbody id="myTable" bgcolor="white">
-            @foreach ($students as $student)
-                <tr>    
-                   
-                    <td>{{$student->userid}}</td>
-                    <td>{{$student->first_name}} {{$student->last_name}}</td>
-                    <td><i></i></td>
-                    
-                </tr>
-            @endforeach
                 <tr>
                     <td>18220197</td>
                     <td>Megan Foong</td>
                     <td><i></i></td>
                 </tr>
-                
+                <tr>
+                    <td>17072670</td>
+                    <td>Derryn Alfred</td>
+                    <td><a href="">project: vUWS (2018)</td>
+                </tr>
+                <tr>
+                    <td>18603949</td>
+                    <td>Jawad Shafiq</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>17764533</td>
+                    <td>Jammy Leabres</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>18044889</td>
+                    <td>Benan Ergen</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>18607420</td>
+                    <td>Christopher Sabat</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>17344832</td>
+                    <td>Han-Te Tsai</td>
+                    <td><a href="">project: vUWS (2018)</td>
+                </tr>
+                <tr>
+                    <td>18494626</td>
+                    <td>Hussein Samman</td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -78,7 +106,9 @@
         <!-- Modal Body -->
         <!-- CSV Message -->
         <div>
-            
+            @if(Session::has('message'))
+                <p >{{ Session::get('message') }}</p>
+            @endif
 
             <!--CSV  Form -->
             <form method='post' action='/uploadFile' enctype='multipart/form-data' >

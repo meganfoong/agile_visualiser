@@ -76,7 +76,7 @@ class CsvController extends Controller
 
                         $insertData = array(
 
-                            "userid" => $importData[0],
+                            "userid" => (int)$importData[0],
                             "is_supervisor" => 0,
                             "first_name" => $importData[1],
                             "last_name" => $importData[2],
