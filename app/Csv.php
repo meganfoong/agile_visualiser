@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Csv extends Model
 {
-    public static function insertData($data){
+   public static function insertData($data) {
 
       $value=DB::table('users')->where('userid', $data['userid'])->get();
+      //dd($data);
       if($value->count() == 0){
          DB::table('users')->insert($data);
       }

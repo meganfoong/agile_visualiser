@@ -41,6 +41,7 @@ class ProjectController extends Controller
         $project = Project::create($request->all());
 
         $project->users()->sync($request->student);
+        
         return back(); 
     }
 

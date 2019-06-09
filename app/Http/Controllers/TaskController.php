@@ -38,7 +38,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        Task::create($request->all());
+        $task = Task::create($request->all());
 
         return back(); 
     }
@@ -104,9 +104,39 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
-        $task = Task::findOrFail($request->taskid);
         
-        $task->update($request->all());
+        dd($request);
+        if (!empty($request->approve)) {
+            if($request->approve == 1 ) {
+                $task = Task::findOrFail($request->taskid);
+
+    
+                $task->users()->attach(Auth::user()->id);
+            } elseif ($request->approve == 0 ) {
+                $task = Task::findOrFail($request->taskid);
+            
+                $$task->update(collect($request)->except('approve')->toArray());
+    
+                $task->users()->detach(Auth::user()->id);
+            }
+        }
+        
+        if (!empty($request->complete)) {
+            if ($request->complete == 1 ) {
+                $task = Task::findOrFail($request->taskid);
+            
+                $task->update()->all();
+    
+            } elseif ($request->complete == 0) {
+                $task = Task::findOrFail($request->taskid);
+            
+                $task->update()->all();
+    
+                $task->users()->sync();
+            }
+        }
+        
+        
   
         return back();
     }

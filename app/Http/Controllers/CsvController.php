@@ -76,7 +76,7 @@ class CsvController extends Controller
 
                         $insertData = array(
 
-                            "userid" => (int)$importData[0],
+                            "userid" => $importData[0],
                             "is_supervisor" => 0,
                             "first_name" => $importData[1],
                             "last_name" => $importData[2],
@@ -99,6 +99,7 @@ class CsvController extends Controller
         }
 
         // Redirect to index
-        return redirect()->action('CsvController@index');
+        //return redirect()->action('CsvController@index');
+        return back();
     }
 }

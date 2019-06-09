@@ -3,11 +3,13 @@
 @if(auth()->user()->is_supervisor == 0)
     @section('studentCrumbs')
     <li class="breadcrumb-item">
-        <a href="{{ url()->previous() }}">
+        @foreach ($project as $item)
+        <a href="{{ URL::to('project', $item->id) }}">
             <i class="material-icons">
                 home
             </i>
         </a>
+        @endforeach
     </li>
     <li class="breadcrumb-item active" aria-current="page">
         @foreach ($task as $item)
@@ -25,11 +27,11 @@
         </a>
     </li>
     <li class="breadcrumb-item">
-        <a href="{{ url()->previous() }}">
-            @foreach ($project as $item)
-                {{$item->title}}
-            @endforeach
+        @foreach ($project as $item)
+        <a href="{{ URL::to('project', $item->id) }}">
+            {{$item->title}}
         </a>
+        @endforeach
     </li>
     <li class="breadcrumb-item active" aria-current="page">
         @foreach ($task as $item)
