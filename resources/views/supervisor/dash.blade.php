@@ -17,15 +17,16 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item list-group-item-action"><b>Recent Comments</b>
             <div class="float-right"><i class="material-icons">keyboard_arrow_up</i>
-
+        
+        
         @foreach($comments as $comment)
             <li class="list-group-item list-group-item-dark">
                 <i class="material-icons">mode_comment</i>
-                <b>{{ $comment->user->first_name }}</b> <i>{{ $comment->body }}</i>
-                <div class="float-right">{{ $comment->created_at }}</div>
+                <b>{{ $comment->first_name }}</b> <i>{{ $comment->body }}</i>
+                <div class="float-right">{{ $comment->created_at }}<input type="submit" value="Reply" class="btn btn-basic"></div>
             </li>
         @endforeach
-
+        
         <form method="post" action="{{ route('comment.add') }}">
             @csrf
             <li class="list-group-item list-group-item-light">

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Session;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Csv;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class CsvController extends Controller
 {
@@ -72,11 +76,13 @@ class CsvController extends Controller
 
                     // Insert user to MySQL database
                     $password = Hash::make('password1');
+                    $supervisor_id = Auth::user()->id;
                     foreach ($importData_arr as $importData) {
 
                         $insertData = array(
 
                             "id" => (int)$importData[0],
+                            "parent_id" => $supervisor_id,
                             "is_supervisor" => 0,
                             "first_name" => $importData[1],
                             "last_name" => $importData[2],

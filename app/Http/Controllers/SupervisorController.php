@@ -24,11 +24,29 @@ class SupervisorController extends Controller
         //$users = User::all();
         //$projects = Project::all();
         //return view('supervisor.index',compact('users'));
-
+        
         $users = User::all();
-        $comments = Auth::user()->comments;
+        //$comments = Auth::user()->comments;
+        
+        //$comments = User::with('students')->where('parent_id', $id)->get();
+        
+        $comments = DB::table('comments')
+        ->join('users', 'comments.user_id', '=', 'users.id')
+        ->select('comments.body', 'users.first_name', 'comments.created_at', 'users.parent_id', 'comments.user_id', 'users.id')
+        ->where(function ($query){
+            $id = Auth::user()->id; // the currently logged in user
+            $query->where('users.parent_id', $id); // supervisor can view their students' comments
+            $query->orWhere('comments.user_id', 'users.parent_id'); //student can view their supervisor's comments
+            $query->orWhere('comments.user_id', $id);// supervisor/student can view their own comments
+        })
+        ->orderBy('comments.created_at', 'desc')
+        ->get();
+        //->orWhere('comments.user_id', 'users.id') 
+        //->orWhere('comments.user_id', $id) // supervisor/student can view their own comments
+        
+        $id = Auth::user()->id; // the currently logged in user
         $projects = Auth::user()->projects;
-        $students = DB::table('users')->where('is_supervisor', 0)->get();
+        $students = DB::table('users')->where('parent_id', $id)->get();
         return view('supervisor.index',compact('projects', 'comments', 'users', 'students'));
     }
 

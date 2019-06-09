@@ -58,4 +58,15 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function students()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    // parent
+    public function supervisor()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
 }
