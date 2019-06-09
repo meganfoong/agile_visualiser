@@ -1,5 +1,22 @@
 @extends('layouts.app')
 
+
+@section('taskMedia')
+
+<img class="mr-8"
+@foreach ($project as $item)
+    src="https://ui-avatars.com/api/?name={{$item->title}}&rounded=true" />
+    @endforeach
+<div class="media-body ml-3">
+    @foreach ($task as $item)
+    <h1 class="mb-0">{{$item->title}}</h1>
+    @endforeach
+    @foreach ($project as $item)
+    <p class="lead">{{$item->title}} </p>
+    @endforeach
+</div>
+@endsection
+
 @if(auth()->user()->is_supervisor == 0)
     @section('studentCrumbs')
     <li class="breadcrumb-item">

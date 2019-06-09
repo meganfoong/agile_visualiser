@@ -58,10 +58,17 @@
                         </li>
                         @endif
                         @else
+                        
+                        <li style="margin: auto">
+                            {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <i class="material-icons">
+                                    power_settings_new
+                                </i>
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -149,17 +156,11 @@
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-10">
                     <div class="page-header mb-4">
+                        
                         <div class="media">
-                            <img class="mr-8"
-                                src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}+{{Auth::user()->last_name}}&rounded=true" />
-                            <div class="media-body ml-3">
-                                <h1 class="mb-0"> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</h1>
-                                @if(auth()->user()->is_supervisor == 0)
-                                <p class="lead">Student</p>
-                                @elseif (auth()->user()->is_supervisor == 1)
-                                <p class="lead">Supervisor</p>
-                                @endif
-                            </div>
+                            @yield('supervisorMedia')
+                            @yield('projectMedia')
+                            @yield('taskMedia')
                         </div>
                     </div>
 
@@ -198,8 +199,16 @@
 
                     <div class="tab-content" id="myTabContent">
                         <!-- Overview tab starts here -->
-                        <div class="tab-pane fade show active" id="nav-overview" role="tabpanel"
-                            aria-labelledby="nav-dashboard-tab">
+                        <div class="tab-pane fade show active" id="nav-dash" role="tabpanel"
+                            aria-labelledby="nav-dash-tab">
+                            <div class="tab-content">
+                                @yield('dash')
+                            </div>
+                        </div>
+                        
+                        <!-- Overview tab starts here -->
+                        <div class="tab-pane fade show" id="nav-overview" role="tabpanel"
+                            aria-labelledby="nav-overview-tab">
                             <div class="tab-content">
                                 @yield('overview')
                             </div>

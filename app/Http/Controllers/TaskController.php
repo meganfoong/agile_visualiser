@@ -17,7 +17,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        
+        $projects = Task::with('users')->get();
+        dd($projects);
     }
 
     /**

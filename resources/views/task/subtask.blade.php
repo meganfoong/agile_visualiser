@@ -37,7 +37,7 @@
             </div>
             <div class="card-body">
                 <button class="btn btn-sm float-right" type="button" data-toggle="collapse"
-                    data-target="#collapseFooter" aria-expanded="false" aria-controls="collapseFooter">
+                    data-target="#collapseFooter{{ $item->id }}" aria-expanded="false" aria-controls="collapseFooter">
                     <i class="material-icons">
                         more_vert
                     </i>
@@ -49,11 +49,15 @@
                 </div>
 
                 <div>
-                    <span>Assigned: {{ $item->assign }}</span>
+                    @foreach ($aid as $user)
+                    @if ($user->id ==  $item->assign)
+                    <span>Assigned: {{ $user->first_name }}</span>
+                    @endif
+                    @endforeach
                 </div>
             </div>
 
-            <div class="card-footer collapse" id="collapseFooter">
+            <div class="card-footer collapse" id="collapseFooter{{ $item->id }}">
                 @if ($item->assign == Auth::user()->id)
                 <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
                     data-toggle="modal" data-target="#complete_task">
