@@ -39,8 +39,7 @@
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
                     data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}"
                     data-startDate="{{$item->startDate}}" data-dueDate="{{$item->dueDate}}"
-                    class="btn btn-sm float-right"
-                    data-toggle="modal" data-target="#edit_task">
+                    class="btn btn-sm float-right" data-toggle="modal" data-target="#edit_task">
                     <i class="material-icons">
                         more_vert
                     </i>
@@ -55,9 +54,10 @@
 
                 </div>
 
-                
 
-                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_task">
+
+                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal"
+                    data-target="#delete_task">
                     <i class="material-icons">
                         delete
                     </i>
@@ -98,6 +98,10 @@
 
                     @include('project.taskform')
                     <input type="hidden" name="project_id" id="project_id" value="{{request()->route('project')}}">
+                    <div class="form-group">
+                        <input type="hidden" name="status" id="status" value="dark">
+                    </div>
+
 
                 </div>
 
@@ -141,6 +145,15 @@
                 <div class="modal-body">
                     <input type="hidden" name="taskid" id="taskid" value="">
                     @include('project.taskform')
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select name="status" class="custom-select custom-select-sm">
+                            <option value="dark" class="text-dark">Select</option>
+                            <option value="success" class="text-success">Complete</option>
+                            <option value="warning" class="text-warning">On Track</option>
+                            <option value="danger" class="text-danger">Off Track</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Modal footer -->
