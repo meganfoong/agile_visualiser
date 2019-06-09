@@ -8,7 +8,13 @@ class Project extends Model
 {
     protected $fillable = [
         'title',
-        'group'
+        'group',
+        'brief',
+        'milestones',
+        'supervisorDetails',
+        'clientDetails',
+        'startDate',
+        'endDate'
       ];
     
     public $timestamps = false;

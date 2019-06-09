@@ -22,11 +22,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
 
-
-
-
-
-
     /*
         protected function credentials(Request $request)
         {
@@ -42,10 +37,6 @@ class LoginController extends Controller
      */
 
     // protected $userid = 'userid';
-
-
-
-
 
 
     /**

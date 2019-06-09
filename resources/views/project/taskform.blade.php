@@ -1,7 +1,6 @@
 <div class="form-group">
     <label for="uname">Title:</label>
-    <input type="text" class="form-control form-control-sm" id="title" placeholder="Title" name="title"
-        required>
+    <input type="text" class="form-control form-control-sm" id="title" placeholder="Title" name="title" required>
     <div class="valid-feedback">Valid.</div>
     <div class="invalid-feedback">Please fill out this field. </div>
 </div>
@@ -19,4 +18,13 @@
         <option value="warning" class="text-warning">On Track</option>
         <option value="danger" class="text-danger">Off Track</option>
     </select>
+</div>
+
+<div class="form-group">
+    <label for="startDate">Start Date:</label>
+    <input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
+</div>
+<div class="form-group">
+    <label for="dueDate">Due Date:</label>
+    <input type="date" class="form-control form-control-sm" id="dueDate" name="dueDate">
 </div>

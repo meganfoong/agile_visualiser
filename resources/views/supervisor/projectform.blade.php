@@ -43,6 +43,24 @@
                 Please fill out this field.
             </div>
         </div>
+        <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" class="form-control form-control-sm" id="endDate" name="endDate">
+        </div>
+        <div class="form-group">
+                <select name="student[]" class="selectpicker" multiple>
+                @foreach ($users as $user)
+                    @if ($user->is_supervisor == 0) 
+                    <option value="{{$user->id}}" class="text-dark">{{$user->first_name}}</option> 
+                    {{-- <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br> --}}
+                    @endif
+                @endforeach
+                </select>
+            </div>
     </div>
     <!-- Details end -->
 
@@ -51,11 +69,14 @@
         <input class="form-control" id="myInput" type="text" placeholder="Filter Students">
         <br>
         <div class="form-group">
+            <select name="student[]" class="selectpicker" multiple>
             @foreach ($users as $user)
-                @if ($user->is_supervisor == 0)  
-                <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br>
+                @if ($user->is_supervisor == 0) 
+                <option value="{{$user->id}}" class="text-dark">{{$user->first_name}}</option> 
+                {{-- <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br> --}}
                 @endif
             @endforeach
+            </select>
         </div>
     </div>
     <!-- Student end -->

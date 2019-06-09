@@ -12,8 +12,10 @@ class Task extends Model
         'description',
         'status',
         'assign',
-        'approve',
-        'parent_id'
+        'complete',
+        'parent_id',
+        'startDate',
+        'dueDate'
         
       ];
 
@@ -39,4 +41,10 @@ class Task extends Model
     {
         return $this->belongsTo('App\Project');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
+
 }

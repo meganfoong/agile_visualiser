@@ -38,6 +38,7 @@
             <div class="card-body">
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
                     data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}"
+                    data-startDate="{{$item->startDate}}" data-dueDate="{{$item->dueDate}}"
                     class="btn btn-sm float-right"
                     data-toggle="modal" data-target="#edit_task">
                     <i class="material-icons">
@@ -54,11 +55,17 @@
 
                 </div>
 
+                
+
                 <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_task">
                     <i class="material-icons">
                         delete
                     </i>
                 </button>
+
+                <div>
+                    <span>Start: {{$item->startDate}} End: {{$item->dueDate}}</span>
+                </div>
             </div>
 
         </div>
@@ -201,12 +208,16 @@
         var title = button.data('mytitle')
         var description = button.data('mydescription')
         var status = button.data('mystatus')
+        var startDate = button.data('startDate')
+        var dueDate = button.data('dueDate')
         var modal = $(this)
 
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #des').val(description);
         modal.find('.modal-body #status').val(status);
+        modal.find('.modal-body #startDate').val(startDate);
+        modal.find('.modal-body #dueDate').val(dueDate);
 
 
 

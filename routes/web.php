@@ -26,7 +26,7 @@ Route::resource('project','ProjectController');
 Route::resource('task','TaskController');
 
 Route::get('/csv_upload_success', 'CsvController@index'); // localhost:8000/
-Route::post('/uploadFile', 'CsvController@uploadFile');
+//Route::post('uploadFile', 'CsvController@uploadFile');
 
 Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 

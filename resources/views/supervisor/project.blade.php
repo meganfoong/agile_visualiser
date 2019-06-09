@@ -1,30 +1,29 @@
-<div class="row content-list-head">
+<div class="content-list-body row">
     <div class="col-auto">
         <h3>Current Projects</h3>
 
 
     </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_project">
+            <i class="material-icons">
+                add
+            </i>
+        </button>
+    </div>
 
-    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_project">
-        <i class="material-icons">
-            add
-        </i>
-    </button>
-
-    <form class="col">
+    <div class="col float-right">
         <div class="float-right">
             <div class="input-group input-group-round">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
+                <div class="input-group-prepend" >
+                    <span class="input-group-text" >
                         <i class="material-icons">filter_list</i>
                     </span>
                 </div>
-
-                <input type="search" class="form-control filter-list-input" placeholder="Filter Projects"
-                    aria-label="Filter Projects">
+                <input type="search" class="form-control filter-list-input" placeholder="Filter Projects" aria-label="Filter Projects">
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <br>
@@ -40,26 +39,37 @@
             </div>
             <div class="card-body">
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
-                    data-mygroup="{{$item->group}}" class="btn btn-sm float-right" data-toggle="modal"
+                    data-mygroup="{{$item->group}}" data-startDate="{{$item->startDate}}" data-endDate="{{$item->endDate}}" class="btn btn-sm float-right" data-toggle="modal"
                     data-target="#edit_project">
                     <i class="material-icons">
                         more_vert
                     </i>
                 </button>
-                
+
                 <div class="card-title">
                     <a href="{{ URL::to('project', $item->id) }}">
                         <h5 data-filter-by="text">{{$item->title}}</h5>
                     </a>
                     <span>{{$item->group}}</span>
-
+                    
                 </div>
+                
+                <div>
+                    <span>Start: {{$item->startDate}} End: {{$item->endDate}}</span>
+                </div>
+
+                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_project">
+                    <i class="material-icons">
+                        delete
+                    </i>
+                </button>
 
                 <ul class="avatars">
                     @foreach ($item->users as $assign)
                     <li>
-                        @if ($assign->is_supervisor = 0)
-                            <img alt="{{$assign->first_name}}" class="avatar" src=".jpg" />
+                        @if ($assign->is_supervisor == 0)
+                        <img alt="" class="avatar" src="https://ui-avatars.com/api/?name={{$assign->first_name}}+{{$assign->last_name}}&rounded=true&size=25"/>
+                        {{$assign->first_name}}
                         @endif
                     </li>
                     @endforeach
@@ -152,7 +162,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     @include('supervisor.projectform')
-                    <input type="hidden" name="student[]"  value="{{ Auth::user()->id }} ">
+                    <input type="hidden" name="student[]" value="{{ Auth::user()->id }} ">
                 </div>
 
                 <!-- Modal footer -->
@@ -194,7 +204,50 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="projectid" id="projectid" value="">
+                    <input type="hidden" name="student[]" value="{{Auth::user()->id}}">
                     @include('supervisor.projectform')
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="material-icons">
+                                check
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal for deleting a task -->
+<div class="modal fade" id="delete_project">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Task</h5><br>
+
+                <div class="modal-options">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
+                        <i class="material-icons">
+                            close
+                        </i>
+                        <br>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <form method="POST" action="{{route('project.destroy', 'redirect')}}" class="was-validated">
+                {{method_field('delete')}}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <h3>Are you sure you want to delete project?</h3>
+                    <input type="hidden" name="projectid" id="projectid" value="">
                 </div>
 
                 <!-- Modal footer -->
@@ -219,23 +272,27 @@
         var id = button.data('myid')
         var title = button.data('mytitle')
         var group = button.data('mygroup')
+        var startDate = button.data('startDate')
+        var endDate = button.data('endDate')
         var modal = $(this)
 
         modal.find('.modal-body #projectid').val(id);
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #group').val(group);
+        modal.find('.modal-body #startDate').val(startDate);
+        modal.find('.modal-body #endDate').val(endDate);
 
 
     })
 
 
-    $('#delete').on('show.bs.modal', function (event) {
+    $('#delete_project').on('show.bs.modal', function (event) {
 
         var button = $(event.relatedTarget)
 
         var id = button.data('myid')
         var modal = $(this)
 
-        modal.find('.modal-body #mod_id').val(id);
+        modal.find('.modal-body #projectid').val(id);
     }) 
 </script>

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password','is_supervisor',
+        'userid', 'first_name', 'last_name', 'email', 'password', 'is_supervisor'
     ];
 
     /**
@@ -31,13 +31,10 @@ class User extends Authenticatable
 
     public function is_supervisor()
     {
-        if(auth()->user()->is_supervisor == 1)
-        {
+        if (auth()->user()->is_supervisor == 1) {
             return true;
-
         }
         return false;
-
     }
 
     /**
@@ -52,5 +49,19 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->belongsToMany('App\Project');
+    }
+
+    public function tasks()
+    {
+        return $this->belongsToMany('App\Task');
+    }
+
+    public static function insertData($data)
+    {
+        $value = User::where('userid', $data['userid'])->get();
+        //dd($data);
+        if ($value->count() == 0) {
+            User::insert($data);
+        }
     }
 }

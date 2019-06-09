@@ -17,6 +17,12 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('group');
+            $table->text('brief')->nullable();
+            $table->text('milestones')->nullable();
+            $table->text('supervisorDetails')->nullable();
+            $table->text('clientDetails')->nullable();
+            $table->date('startDate');
+            $table->date('endDate');
             $table->timestamps();
 
 
