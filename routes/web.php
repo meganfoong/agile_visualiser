@@ -22,6 +22,7 @@ Route::resource('modal','ModalController');
 
 Route::get('/', 'HomeController@index')->middleware('auth');
 Route::resource('supervisor','SupervisorController');
+Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 Route::resource('project','ProjectController');
 Route::resource('task','TaskController');
 

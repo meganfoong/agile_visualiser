@@ -1,7 +1,39 @@
+@if(Session::has('message'))
+                <div class="alert alert-success"><p>{{ Session::get('message') }}</p></div>
+            @endif
 <div class="row content-list-head">
-    <div class="col-auto">
-        <h3>Dashboard</h3>
 
+    <div class="col-auto">
+        
+        
+            <h3>Comments</h3>
+    </div>
+
+</div>
+
+<br>
+
+<div class="card card-team">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-action"><b>Recent Comments</b>
+            <div class="float-right"><i class="material-icons">keyboard_arrow_up</i>
+        
+        
+        @foreach($comments as $comment)
+            <li class="list-group-item list-group-item-dark">
+                <i class="material-icons">mode_comment</i>
+                <b>{{ $comment->first_name }}</b> <i>{{ $comment->body }}</i>
+                <div class="float-right">{{ $comment->created_at }}<input type="submit" value="Reply" class="btn btn-basic"></div>
+            </li>
+        @endforeach
+        
+        <form method="post" action="{{ route('comment.add') }}">
+            @csrf
+            <li class="list-group-item list-group-item-light">
+                <input type="text" class="form-control" rows="1" name="comment_body" id="comment" placeholder="Enter new comment">
+                <input type="submit" value="Add comment" class="btn btn-basic">
+            </li>
+        </form>
 
     </div>
 

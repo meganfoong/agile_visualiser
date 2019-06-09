@@ -144,7 +144,9 @@ class SupervisorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    { }
+    { 
+        
+    }
 
     /**
      * Show the form for editing the specified resource.

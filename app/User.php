@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'userid', 'first_name', 'last_name', 'email', 'password', 'is_supervisor'
+        'id', 'first_name', 'last_name', 'email', 'password','is_supervisor'
     ];
 
     /**
@@ -43,7 +43,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'userid_verified_at' => 'datetime',
+        'id_verified_at' => 'datetime',
     ];
 
     public function projects()
@@ -58,10 +58,25 @@ class User extends Authenticatable
 
     public static function insertData($data)
     {
-        $value = User::where('userid', $data['userid'])->get();
+        $value = User::where('id', $data['id'])->get();
         //dd($data);
         if ($value->count() == 0) {
             User::insert($data);
         }
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+    public function students()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    // parent
+    public function supervisor()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }
