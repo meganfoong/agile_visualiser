@@ -109,6 +109,7 @@ class TaskController extends Controller
         //dd($request->approve);
         
         $task = Task::findOrFail($request->taskid);
+
         if (!empty($request->approve)) {
             
             $task->update(collect($request)->except('approve')->toArray());
@@ -132,9 +133,9 @@ class TaskController extends Controller
                 $task->users()->sync(NULL);
             }
         }
+
+        $task->update($request->all());
         
-        
-  
         return back();
     }
 
