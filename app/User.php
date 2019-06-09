@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'userid', 'first_name', 'last_name', 'email', 'password','is_supervisor'
+        'id', 'first_name', 'last_name', 'email', 'password','is_supervisor'
     ];
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'userid_verified_at' => 'datetime',
+        'id_verified_at' => 'datetime',
     ];
 
     public function projects()

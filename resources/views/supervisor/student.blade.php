@@ -43,7 +43,7 @@
             @foreach ($students as $student)
                 <tr>    
 
-                    <td>{{$student->userid}}</td>
+                    <td>{{$student->id}}</td>
                     <td>{{$student->first_name}} {{$student->last_name}}</td>
                     <td><i></i></td>
 
