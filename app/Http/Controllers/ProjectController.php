@@ -41,7 +41,7 @@ class ProjectController extends Controller
         $project = Project::create($request->all());
 
         $project->users()->sync($request->student);
-        
+
         return back(); 
     }
 
@@ -54,7 +54,7 @@ class ProjectController extends Controller
     public function show(Project $projects, Task $tasks, $id)
     {
     
-        $tasks = Task::with('projects')->where('project_id', $id)->get();
+        $tasks = Task::with('projects')->where('project_id', $id)->where('parent_id', null)->get();
         $projects = Project::get()->where('id', $id);
         //dd($projects);
         return view('project.index',compact('tasks', 'projects' ));

@@ -105,34 +105,30 @@ class TaskController extends Controller
     public function update(Request $request)
     {
         
-        dd($request);
+        //dd($request->approve);
+        
+        $task = Task::findOrFail($request->taskid);
         if (!empty($request->approve)) {
-            if($request->approve == 1 ) {
-                $task = Task::findOrFail($request->taskid);
-
-    
-                $task->users()->attach(Auth::user()->id);
-            } elseif ($request->approve == 0 ) {
-                $task = Task::findOrFail($request->taskid);
             
-                $$task->update(collect($request)->except('approve')->toArray());
-    
+            $task->update(collect($request)->except('approve')->toArray());
+            //dd($request);
+            if($request->approve == 1 ) {
+                $task->users()->attach(Auth::user()->id);
+            } 
+            elseif ($request->approve == 2 ) {
                 $task->users()->detach(Auth::user()->id);
             }
         }
-        
+
         if (!empty($request->complete)) {
             if ($request->complete == 1 ) {
-                $task = Task::findOrFail($request->taskid);
             
-                $task->update()->all();
-    
-            } elseif ($request->complete == 0) {
-                $task = Task::findOrFail($request->taskid);
-            
-                $task->update()->all();
-    
-                $task->users()->sync();
+                $task->update($request->all());
+            } 
+            elseif ($request->complete == 2) {
+                $task->update($request->all());
+
+                $task->users()->sync(NULL);
             }
         }
         

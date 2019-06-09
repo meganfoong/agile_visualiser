@@ -55,7 +55,7 @@
 
             <div class="card-footer collapse" id="collapseFooter">
                 @if ($item->assign == Auth::user()->id)
-                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}" data-userid=""
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
                     data-toggle="modal" data-target="#complete_task">
                     <i class="material-icons">
                         check
@@ -69,7 +69,7 @@
                     </i>
                 </button>
                 @else
-                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-userid="" data-toggle="modal"
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-toggle="modal"
                     data-target="#approve_task">
                     <i class="material-icons">
                         thumbs_up_down
@@ -291,7 +291,6 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="taskid" id="taskid" value="">
-                    <input type="hidden" name="userid" id="userid" value="{{Auth::user()->id}}">
                     @include('task.approveform')
                     <div class="form-group">
                         <label for="status">Status:</label>
@@ -347,7 +346,7 @@
                         <label for="complete">Is the task complete?</label>
                         <select name="complete" class="custom-select custom-select-sm">
                             <option value="1" class="text-dark">Yes</option>
-                            <option value="0" class="text-success">No</option>
+                            <option value="2" class="text-success">No</option>
                         </select>
                     </div>
 
@@ -414,11 +413,10 @@
 
         var button = $(event.relatedTarget)
         var id = button.data('myid')
-        var userid = button.data('userid')
         var modal = $(this)
 
         modal.find('.modal-body #taskid').val(id);
-        modal.find('.modal-body #userid').val(userid);
+
     })
 
     $('#complete_task').on('show.bs.modal', function (event) {
@@ -426,12 +424,11 @@
         var button = $(event.relatedTarget)
         var id = button.data('myid')
         var status = button.data('mystatus')
-        var userid = button.data('userid')
         var modal = $(this)
 
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #status').val(status);
-        modal.find('.modal-body #userid').val(userid);
+
     })
 
     $('#realstatus_task').on('show.bs.modal', function (event) {
