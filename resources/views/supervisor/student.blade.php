@@ -39,7 +39,7 @@
 
            
 
-            <tbody id="myTable" bgcolor="white">
+            <tbody id="myTable">
             @foreach ($students as $student)
                 <tr>    
 

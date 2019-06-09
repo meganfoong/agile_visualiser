@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Hash;
 use App\Csv;
-
+use App\Comment;
 class SupervisorController extends Controller
 {
     /**
@@ -32,8 +32,8 @@ class SupervisorController extends Controller
         
         //$comments = User::with('students')->where('parent_id', $id)->get();
         
-        $comments = DB::table('comments')
-        ->join('users', 'comments.user_id', '=', 'users.id')
+        $comments = Comment::
+        join('users', 'comments.user_id', '=', 'users.id')
         ->select('comments.body', 'users.first_name', 'comments.created_at', 'users.parent_id', 'comments.user_id', 'users.id')
         ->where(function ($query){
             $id = Auth::user()->id; // the currently logged in user
@@ -48,7 +48,7 @@ class SupervisorController extends Controller
         
         $id = Auth::user()->id; // the currently logged in user
         $projects = Auth::user()->projects;
-        $students = DB::table('users')->where('parent_id', $id)->get();
+        $students = User::where('parent_id', $id)->get();
         return view('supervisor.index',compact('projects', 'comments', 'users', 'students'));
     }
 

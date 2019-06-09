@@ -58,7 +58,6 @@
                         </li>
                         @endif
                         @else
-<<<<<<< HEAD
                         
                         <li style="margin: auto">
                             {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
@@ -72,14 +71,6 @@
                                 </i>
                             </a>
 
-=======
-                        <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-        
->>>>>>> comments-student
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
@@ -208,7 +199,6 @@
 
                     <div class="tab-content" id="myTabContent">
                         <!-- Overview tab starts here -->
-<<<<<<< HEAD
                         <div class="tab-pane fade show active" id="nav-dash" role="tabpanel"
                             aria-labelledby="nav-dash-tab">
                             <div class="tab-content">
@@ -219,10 +209,6 @@
                         <!-- Overview tab starts here -->
                         <div class="tab-pane fade show" id="nav-overview" role="tabpanel"
                             aria-labelledby="nav-overview-tab">
-=======
-                        <div class="tab-pane fade show active" id="nav-overview" role="tabpanel"
-                            aria-labelledby="nav-dashboard-tab">
->>>>>>> comments-student
                             <div class="tab-content">
                                 @yield('overview')
                             </div>
