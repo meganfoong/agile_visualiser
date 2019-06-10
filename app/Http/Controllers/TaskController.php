@@ -77,7 +77,11 @@ class TaskController extends Controller
         foreach ($approve as $item4) {
             $uid = $item4->users;
         }
-
+        if (!empty($uid)) {
+            return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
+        } else {
+            return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task'));
+        }
         //$a = $aid->where('pivot.project_id', $pid);
         
 
