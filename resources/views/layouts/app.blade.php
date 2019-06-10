@@ -251,9 +251,9 @@
                         </div>
 
                         <!-- Project tab starts here -->
-                        <div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-projects-tab">
+                        <div class="tab-pane fade" id="nav-subContribution" role="tabpanel" aria-labelledby="nav-subContribution-tab">
                             <div class="tab-content">
-                                @yield('other')
+                                @yield('subContribution')
                             </div>
                         </div>
                     </div>

@@ -65,8 +65,8 @@
             aria-controls="nav-subtask" aria-selected="true">Sub-tasks</a>
     </li>
     <li class="nav-item">
-        <a class="nav-item nav-link" id="nav-other-tab" data-toggle="tab" href="#nav-other" role="tab"
-            aria-controls="nav-other" aria-selected="false">Other</a>
+        <a class="nav-item nav-link" id="nav-subContribution-tab" data-toggle="tab" href="#nav-subContribution" role="tab"
+            aria-controls="nav-subContribution" aria-selected="false">Contribution</a>
     </li>
 </ul>
 @endsection
@@ -75,6 +75,6 @@
 @include('task.subtask')
 @endsection
 
-@section('other')
-
+@section('subContribution')
+@include('task.contribution')
 @endsection

@@ -59,9 +59,9 @@ class ProjectController extends Controller
         $tasks = Task::with('projects')->where('project_id', $id)->where('parent_id', null)->get();
         //$projects = Project::get()->where('id', $id);
         $projects = Project::with('comments', 'users')->where('id', $id)->get();
-        $comments = Comment::with('projects', 'users')->where('project_id', $id)->get();
+        $comments = Comment::with('projects', 'users')->get();
         $users = User::with('comments')->get();
-        //dd($users);
+        //dd($projects);
         return view('project.index',compact('tasks', 'projects', 'comments' ));
     }
 

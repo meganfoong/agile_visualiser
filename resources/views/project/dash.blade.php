@@ -18,9 +18,11 @@
         </li>
         @endforeach
 
-        <form method="post" action="{{ route('comment.add') }}">
+        <form method="post" action="">
             @csrf
             <li class="list-group-item list-group-item-light">
+                <input type="hidden" name="project_id" id="project_id" value="">
+                <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                 <input type="text" class="form-control" rows="1" name="comment_body" id="comment"
                     placeholder="Enter new comment">
                 <input type="submit" value="Add comment" class="btn btn-basic">

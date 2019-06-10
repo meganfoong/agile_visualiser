@@ -86,7 +86,7 @@ class TaskController extends Controller
         //     $aid = $item->projects;
         // }
         // $users = $aid->where('id', $pid);
-        // dd($users);
+        // dd($aid);
 
         return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
     }
