@@ -26,9 +26,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -39,6 +39,11 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
+        if ($request->store == 1) {
+            $comment = Comment::create(collect($request)->except('store')->toArray());
+            return back(); 
+        }
 
         $project = Project::create($request->all());
 
@@ -57,12 +62,19 @@ class ProjectController extends Controller
     {
     
         $tasks = Task::with('projects')->where('project_id', $id)->where('parent_id', null)->get();
-        //$projects = Project::get()->where('id', $id);
-        $projects = Project::with('comments', 'users')->where('id', $id)->get();
-        $comments = Comment::with('projects', 'users')->get();
-        $users = User::with('comments')->get();
-        //dd($projects);
-        return view('project.index',compact('tasks', 'projects', 'comments' ));
+        
+        $projects = Project::get()->where('id', $id);
+        
+        $projectid = Project::with('comments', 'users')->where('id', $id)->get();
+        foreach ($projectid as $item1) {
+            $pid = $item1->id;
+        }
+        
+        $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
+
+        $users = Comment::with('users')->get();
+        //dd($users->users);
+        return view('project.index',compact('tasks', 'pid', 'comments', 'projects' ));
     }
 
     /**

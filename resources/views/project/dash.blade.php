@@ -18,12 +18,13 @@
         </li>
         @endforeach
 
-        <form method="post" action="">
+        <form method="post" action="{{route('project.store')}}">
             @csrf
             <li class="list-group-item list-group-item-light">
-                <input type="hidden" name="project_id" id="project_id" value="">
+                <input type="hidden" name="project_id" id="project_id" value="{{$pid}}">
                 <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
-                <input type="text" class="form-control" rows="1" name="comment_body" id="comment"
+                <input type="hidden" name="store" id="store" value="1">
+                <input type="text" class="form-control" rows="1" name="body" id="body"
                     placeholder="Enter new comment">
                 <input type="submit" value="Add comment" class="btn btn-basic">
             </li>
