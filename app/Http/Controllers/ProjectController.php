@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Project;
+use App\Comment;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,9 +57,12 @@ class ProjectController extends Controller
     {
     
         $tasks = Task::with('projects')->where('project_id', $id)->where('parent_id', null)->get();
-        $projects = Project::get()->where('id', $id);
-        //dd($projects);
-        return view('project.index',compact('tasks', 'projects' ));
+        //$projects = Project::get()->where('id', $id);
+        $projects = Project::with('comments', 'users')->where('id', $id)->get();
+        $comments = Comment::with('projects', 'users')->where('project_id', $id)->get();
+        $users = User::with('comments')->get();
+        //dd($users);
+        return view('project.index',compact('tasks', 'projects', 'comments' ));
     }
 
     /**

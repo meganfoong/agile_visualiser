@@ -36,6 +36,8 @@
                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="card-body">
+
+                    
                 <button class="btn btn-sm float-right" type="button" data-toggle="collapse"
                     data-target="#collapseFooter{{ $item->id }}" aria-expanded="false" aria-controls="collapseFooter">
                     <i class="material-icons">
@@ -55,6 +57,20 @@
                     @endif
                     @endforeach
                 </div>
+
+                <div>
+                    <span>Approved: </span>
+                    @foreach ($uid as $approve)
+                    <span>{{$approve->first_name}}</span>
+                    @endforeach
+                </div>
+                
+                @if ($item->complete == 1)
+                <hr>
+                <div class="text-center">
+                    {{$item->title}} confirmed complete by Supervisor
+                </div>
+                @endif
             </div>
 
             <div class="card-footer collapse" id="collapseFooter{{ $item->id }}">

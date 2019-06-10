@@ -28,4 +28,9 @@ class Project extends Model
     {
         return $this->hasMany('App\Task');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }

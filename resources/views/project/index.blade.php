@@ -79,6 +79,10 @@
 </ul>
 @endsection
 
+@section('dash')
+@include('project.dash')
+@endsection
+
 @section('overview')
 @include('project.overview')
 @endsection

@@ -72,6 +72,12 @@ class TaskController extends Controller
         foreach ($assign as $item3) {
             $aid = $item3->users;
         }
+
+        $approve = Task::with('users')->where('parent_id', $id)->get();
+        foreach ($approve as $item4) {
+            $uid = $item4->users;
+        }
+
         //$a = $aid->where('pivot.project_id', $pid);
         
 
@@ -82,7 +88,7 @@ class TaskController extends Controller
         // $users = $aid->where('id', $pid);
         // dd($users);
 
-        return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task'));
+        return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
     }
 
     /**

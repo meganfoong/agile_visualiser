@@ -6,9 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    public function user()
+    protected $fillable = [
+        'body'
+    ];
+    
+    public function users()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsTo(Project::class);
     }
 
     public function replies()

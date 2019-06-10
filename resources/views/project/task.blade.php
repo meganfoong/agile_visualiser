@@ -54,8 +54,6 @@
 
                 </div>
 
-
-
                 <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal"
                     data-target="#delete_task">
                     <i class="material-icons">
