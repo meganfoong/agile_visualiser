@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Project;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Events\TaskCreated;
 
 class TaskController extends Controller
 {
@@ -38,10 +40,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-
-        $task = Task::create($request->all());
         
-        //event(new TaskCreated($task));
+        $task = Task::create($request->all());
+
+        // call our event here, to insert task into activity table
+        event(new TaskCreated($task));
 
         return back(); 
     }
