@@ -50,6 +50,22 @@
     </ul>
 </div>
 
+<div class="card card-team">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-action"><b>Activities</b>
+            <div class="float-right"><i class="material-icons">keyboard_arrow_up</i>
+
+        @foreach ($activities as $item)
+        <li class="list-group-item list-group-item-secondary">
+        
+            <i class="material-icons">account_circle</i>
+            {{$item->body}}
+            <div class="float-right">{{$item->created_at}}</div>
+        </li>
+        @endforeach
+    </ul>
+</div>
+
 <script>
     var objDiv = document.getElementById("comment");
 objDiv.scrollTop = objDiv.scrollHeight;

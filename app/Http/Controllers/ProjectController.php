@@ -6,6 +6,7 @@ use App\Task;
 use App\Project;
 use App\Comment;
 use App\User;
+use App\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,15 +73,20 @@ class ProjectController extends Controller
             $uid = $item1->users;
         }
         
-        $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
+        $activities = Activity::with('projects')->where('project_id', $id)->orderBy('created_at', 'desc')->get();
+        //dd($activities);
+        $comments = Comment::with('projects', 'users')->where('project_id', $pid)->orderBy('created_at', 'desc')->get();
         if (!empty($comments)) {
-            return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
+            return view('project.index',compact('tasks', 'pid', 'activities', 'comments', 'projects', 'uid' ));
         } else {
-            return view('project.index',compact('tasks', 'pid', 'projects', 'uid' ));
+            return view('project.index',compact('tasks', 'pid', 'activities','projects', 'uid' ));
         }
 
+        
+        
+
         //dd($aid);
-        return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
+        return view('project.index',compact('tasks', 'pid', 'comments', 'activities', 'projects', 'uid' ));
     }
 
     /**
