@@ -36,9 +36,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\AddTaskDeletedEventToActivity',
         ],
 
-        
+        'App\Events\TaskApproved' => [
+            'App\Listeners\AddTaskApprovedEventToActivity',
+        ],
 
-      
+        
     ];
 
     /**

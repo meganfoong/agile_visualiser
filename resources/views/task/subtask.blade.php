@@ -60,9 +60,15 @@
 
                 <div>
                     <span>Approved: </span>
+                    @if (!empty($uid))
                     @foreach ($uid as $approve)
+                    @foreach ($approve->tasks as $subtask)
+                    @if ($subtask->id == $item->id)
                     <span>{{$approve->first_name}}</span>
+                    @endif
                     @endforeach
+                    @endforeach
+                    @endif
                 </div>
 
                 @if ($item->complete == 1)
@@ -81,6 +87,12 @@
                         check
                     </i>
                 </button>
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
+                    data-toggle="modal" data-target="#status_task">
+                    <i class="material-icons">
+                        bar_chart
+                    </i>
+                </button>
                 @elseif (Auth::user()->is_supervisor == 1)
                 <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
                     data-complete="" data-toggle="modal" data-target="#realstatus_task">
@@ -96,18 +108,19 @@
                     </i>
                 </button>
                 @endif
-                <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
-                    data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}"
-                    class="btn btn-sm " data-toggle="modal" data-target="#edit_task">
-                    <i class="material-icons">
-                        update
-                    </i>
-                </button>
 
                 <button type="button" data-myid="{{$item->id}}" data-myassign="{{$item->assign}}" class="btn btn-sm "
                     data-toggle="modal" data-target="#assign_task">
                     <i class="material-icons">
                         person
+                    </i>
+                </button>
+
+                <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
+                    data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}" class="btn btn-sm "
+                    data-toggle="modal" data-target="#edit_task">
+                    <i class="material-icons">
+                        update
                     </i>
                 </button>
 
@@ -318,16 +331,10 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="taskid" id="taskid" value="">
-                    @include('task.approveform')
-                    <div class="form-group">
-                        <label for="status">Status:</label>
-                        <select name="status" class="custom-select custom-select-sm">
-                            <option value="dark" class="text-dark">Select</option>
-                            <option value="success" class="text-success">Complete</option>
-                            <option value="warning" class="text-warning">On Track</option>
-                            <option value="danger" class="text-danger">Off Track</option>
-                        </select>
-                    </div>
+                    <input type="hidden" name="status" id="status" value="success">
+                    <input type="hidden" name="approve" id="approve" value="1">
+                    <h3>Are you sure you want to complete task?</h3>
+                    <h3>This cannot be reverted!</h3>
                 </div>
 
                 <!-- Modal footer -->
@@ -446,7 +453,47 @@
     </div>
 </div>
 
+<!-- The Modal for updating status of task -->
+<div class="modal fade" id="status_task">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Change status</h5><br>
 
+                <div class="modal-options">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
+                        <i class="material-icons">
+                            close
+                        </i>
+                        <br>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <form method="POST" action="{{route('task.update', 'redirect')}}" class="was-validated">
+                {{method_field('PATCH')}}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="hidden" name="taskid" id="taskid" value="">
+                    @include('task.statusform')
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="material-icons">
+                                check
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     $('#edit_task').on('show.bs.modal', function (event) {
 
@@ -520,4 +567,15 @@
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #assign').val(assign);
     })
+
+    $('#status_task').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget)
+        var id = button.data('myid')
+        var status = button.data('mystatus')
+        var modal = $(this)
+
+        modal.find('.modal-body #taskid').val(id);
+        modal.find('.modal-body #status').val(status);
+})
 </script>

@@ -11,6 +11,7 @@ use App\Events\TaskCreated;
 use App\Events\TaskAssigned;
 use App\Events\TaskUpdated;
 use App\Events\TaskDeleted;
+use App\Events\TaskApproved;
 
 class TaskController extends Controller
 {
@@ -81,10 +82,12 @@ class TaskController extends Controller
             $aid = $item3->users;
         }
 
-        $approve = Task::with('users')->where('parent_id', $id)->get();
+        $approve = Task::has('users')->where('parent_id', $id)->get();
         foreach ($approve as $item4) {
             $uid = $item4->users;
         }
+
+        //dd($uid);
 
         // foreach ($aid as $i) {
         //     $u[] = $i->id;
@@ -155,9 +158,11 @@ class TaskController extends Controller
             
             if($request->approve == 1 ) {
                 $task->users()->attach(Auth::user()->id);
+                event(new TaskCreated($task));
             } 
             elseif ($request->approve == 2 ) {
                 $task->users()->detach(Auth::user()->id);
+                event(new TaskCreated($task));
             }
             return back();
         }

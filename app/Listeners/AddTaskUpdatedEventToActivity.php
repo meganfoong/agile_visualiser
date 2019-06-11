@@ -31,20 +31,37 @@ class AddTaskUpdatedEventToActivity
      */
     public function handle(TaskUpdated $event)
     {
-        $user = Auth::user(); // the currently logged in user
+        $author = Auth::user()->first_name; // the currently logged in user
         // $event->task
         $title = $event->task->title;
-        $projectid = $event->task->project_id;
-        $project_name = Project::where("id", $projectid)->get();
-        foreach ($project_name as $item2) {
-            $pid = $item2->title;
+        $pid = $event->task->project_id;
+
+
+        $project = Project::where("id", $pid)->get();
+        foreach ($project as $item1) {
+            $pTitle = $item1->title;
         }
-        
-        $insertData = new Activity([
-            "project_id" => $projectid,
-            "body" => "$user->first_name updated the task $title in project $pid",
-            "created_at" => now()
-        ]);
-        $insertData->save();
+
+        if (!empty($event->task->parent_id)) {
+            $parent = $event->task->parent_id;
+
+            $task = Task::where('id', $parent)->get();
+            foreach ($task as $item2) {
+                $tTitle = $item2->title;
+            }
+            $insertData = new Activity([
+                "project_id" => $pid,
+                "body" => "$author updated the subtask $title in task $tTitle",
+                "created_at" => now()
+            ]);
+            $insertData->save();
+        } else {
+            $insertData = new Activity([
+                "project_id" => $pid,
+                "body" => "$author updated the task $title in project $pTitle",
+                "created_at" => now()
+            ]);
+            $insertData->save();
+        }
     }
 }

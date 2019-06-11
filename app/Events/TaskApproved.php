@@ -8,10 +8,10 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use App\Task;
 
-class TaskCreated
+class TaskApproved
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    
+
     public $task;
     /**
      * Create a new event instance.
