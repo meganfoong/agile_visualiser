@@ -52,14 +52,16 @@ class AddTaskUpdatedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author updated the subtask $title in task $tTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'secondary'
             ]);
             $insertData->save();
         } else {
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author updated the task $title in project $pTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'secondary'
             ]);
             $insertData->save();
         }

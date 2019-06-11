@@ -45,7 +45,8 @@ class AddTaskCompletedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author confirmed completion and changed $title status to complete in task $tTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'success'
             ]);
             $insertData->save();
         }
@@ -53,7 +54,8 @@ class AddTaskCompletedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author changed $title status to on track as task is not yet complete",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'warning'
             ]);
             $insertData->save();
         }
@@ -61,7 +63,8 @@ class AddTaskCompletedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author changed $title status to off track as task is not yet complete",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'danger'
             ]);
             $insertData->save();
         }

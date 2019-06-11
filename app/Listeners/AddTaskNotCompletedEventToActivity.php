@@ -39,14 +39,16 @@ class AddTaskNotCompletedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author changed $title status to on track as task is not yet complete",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'warning'
             ]);
             $insertData->save();
         } elseif ($status == 'danger') {
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author changed $title status to off track as task is not yet complete",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'danger'
             ]);
             $insertData->save();
         }

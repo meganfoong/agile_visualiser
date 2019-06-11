@@ -10,6 +10,7 @@ use Session;
 use Illuminate\Support\Facades\Hash;
 use App\Csv;
 use App\Comment;
+use App\Project;
 class SupervisorController extends Controller
 {
     /**
@@ -70,7 +71,6 @@ class SupervisorController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         if ($request->input('submit') != null) {
 
             $file = $request->file('file');
@@ -165,9 +165,13 @@ class SupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     { 
         
+        if (!empty($request->projectid)) {
+            $project = Project::where('id', $request->projectid)->get();
+            dd($project);
+        }
     }
 
     /**

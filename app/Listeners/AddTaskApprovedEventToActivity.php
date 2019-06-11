@@ -48,14 +48,16 @@ class AddTaskApprovedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author approved $title and changed status to complete in task $tTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'success'
             ]);
             $insertData->save();
         } else {
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author approved $title in task $tTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'primary'
             ]);
             $insertData->save();
         }

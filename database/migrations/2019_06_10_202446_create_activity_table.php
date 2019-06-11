@@ -17,6 +17,7 @@ class CreateActivityTable extends Migration
             $table->increments('id');
             $table->integer('project_id')->unsigned();
             $table->text('body');
+            $table->text('type');
             $table->timestamps();
 
             $table->foreign('project_id')

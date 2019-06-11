@@ -75,8 +75,6 @@
         <!-- Modal Body -->
         <!-- CSV Message -->
         <div>
-            
-
             <!--CSV  Form -->
             <form method='post' action='{{route('supervisor.store')}}' enctype='multipart/form-data' >
                 {{ csrf_field() }}

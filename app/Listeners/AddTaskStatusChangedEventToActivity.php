@@ -46,7 +46,8 @@ class AddTaskStatusChangedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author changed $title status to on track in task $tTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'warning'
             ]);
             $insertData->save();
         }
@@ -54,7 +55,8 @@ class AddTaskStatusChangedEventToActivity
             $insertData = new Activity([
                 "project_id" => $pid,
                 "body" => "$author changed $title status to off track in task $tTitle",
-                "created_at" => now()
+                "created_at" => now(),
+                "type" => 'danger'
             ]);
             $insertData->save();
         }

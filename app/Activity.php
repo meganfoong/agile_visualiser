@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $fillable = [
-        'body', 'project_id'
+        'body', 'project_id', 'type'
     ];
 
     public function projects()

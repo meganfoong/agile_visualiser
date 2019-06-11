@@ -46,7 +46,8 @@ class AddTaskUnapprovedEventToActivity
         $insertData = new Activity([
             "project_id" => $pid,
             "body" => "$author unapproved $title in task $tTitle",
-            "created_at" => now()
+            "created_at" => now(),
+            "type" => 'info'
         ]);
         $insertData->save();
     }

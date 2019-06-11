@@ -75,18 +75,24 @@ class ProjectController extends Controller
         
         $activities = Activity::with('projects')->where('project_id', $id)->orderBy('created_at', 'desc')->get();
         //dd($activities);
-        $comments = Comment::with('projects', 'users')->where('project_id', $pid)->orderBy('created_at', 'desc')->get();
-        if (!empty($comments)) {
+        $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
+
+        if (!empty($comments) && !empty($activities)) {
             return view('project.index',compact('tasks', 'pid', 'activities', 'comments', 'projects', 'uid' ));
-        } else {
-            return view('project.index',compact('tasks', 'pid', 'activities','projects', 'uid' ));
         }
+        elseif (!empty($comments) && empty($activities)) {
+            return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
+        } 
+        elseif (!empty($activities) && empty($comments)) {
+            return view('project.index',compact('tasks', 'pid', 'activities', 'projects', 'uid' ));
+        } 
+        
 
         
         
 
         //dd($aid);
-        return view('project.index',compact('tasks', 'pid', 'comments', 'activities', 'projects', 'uid' ));
+        //return view('project.index',compact('tasks', 'pid', 'comments', 'activities', 'projects', 'uid' ));
     }
 
     /**

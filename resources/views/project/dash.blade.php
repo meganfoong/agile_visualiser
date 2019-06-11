@@ -51,12 +51,12 @@
 </div>
 
 <div class="card card-team">
-    <ul class="list-group list-group-flush">
+    <ul class="list-group list-group-flush" style="height: 1000px; overflow-y: scroll;" id='comment'>
         <li class="list-group-item list-group-item-action"><b>Activities</b>
             <div class="float-right"><i class="material-icons">keyboard_arrow_up</i>
 
         @foreach ($activities as $item)
-        <li class="list-group-item list-group-item-secondary">
+        <li class="list-group-item list-group-item-{{$item->type}}">
         
             <i class="material-icons">account_circle</i>
             {{$item->body}}
@@ -67,7 +67,10 @@
 </div>
 
 <script>
-    var objDiv = document.getElementById("comment");
-objDiv.scrollTop = objDiv.scrollHeight;
+    var comment = document.getElementById("comment");
+    comment.scrollTop = objDiv.scrollHeight;
+
+    var activity = document.getElementById("activity");
+    activity.scrollTop = objDiv.scrollHeight;
 
 </script>
