@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskCreated;
+use App\Events\TaskDeleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
@@ -11,7 +11,7 @@ use App\Activity;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
 
-class AddTaskCreatedEventToActivity
+class AddTaskDeletedEventToActivity
 {
     /**
      * Create the event listener.
@@ -26,10 +26,10 @@ class AddTaskCreatedEventToActivity
     /**
      * Handle the event.
      *
-     * @param  TaskCreated  $event
+     * @param  TaskDeleted  $event
      * @return void
      */
-    public function handle(TaskCreated $event)
+    public function handle(TaskDeleted $event)
     {
         $user = Auth::user(); // the currently logged in user
         // $event->task
@@ -42,7 +42,7 @@ class AddTaskCreatedEventToActivity
         
         $insertData = new Activity([
             "project_id" => $projectid,
-            "body" => "$user->first_name created the task $title in project $pid",
+            "body" => "$user->first_name deleted the task $title in project $pid",
             "created_at" => now()
         ]);
         $insertData->save();

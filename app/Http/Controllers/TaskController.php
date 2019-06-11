@@ -9,6 +9,8 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Events\TaskCreated;
 use App\Events\TaskAssigned;
+use App\Events\TaskUpdated;
+use App\Events\TaskDeleted;
 
 class TaskController extends Controller
 {
@@ -43,7 +45,7 @@ class TaskController extends Controller
     {
         
         $task = Task::create($request->all());
-
+        
         // call our event here, to insert task into activity table
         event(new TaskCreated($task));
 
@@ -175,6 +177,8 @@ class TaskController extends Controller
 
         $task->update($request->all());
         
+        // event to update task in activity table
+        event(new TaskUpdated($task));
         return back();
     }
 
@@ -189,7 +193,8 @@ class TaskController extends Controller
         $task = Task::findOrFail($request->taskid);
 
         $task->delete();
-       
+        //event
+        event(new TaskDeleted($task));
         return back();
     }
 }
