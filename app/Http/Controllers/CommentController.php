@@ -9,12 +9,9 @@ class CommentController extends Controller
 {
     public function store(Request $request)
     {
-        $comment = new Comment;
-        $comment->body = $request->get('comment_body');
-        $comment->user()->associate($request->user());
-        $comment->save();
+        $comment = Comment::create($request->all());
 
-        return redirect('/adminHome');
+        return back();
     }
 
     /**

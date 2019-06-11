@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use App\Project;
+use App\Comment;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProjectController extends Controller
 {
@@ -14,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('project.index');
+        
     }
 
     /**
@@ -22,9 +27,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -35,7 +40,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        Project::create($request->all());
+        //dd($request);
+        if ($request->store == 1) {
+            $comment = Comment::create(collect($request)->except('store')->toArray());
+            return back(); 
+        }
+
+        $project = Project::create($request->all());
+
+        $project->users()->sync($request->student);
 
         return back(); 
     }
@@ -46,9 +59,28 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $projects, Task $tasks, $id)
     {
-        return view('project.index');
+    
+        $tasks = Task::with('projects')->where('project_id', $id)->where('parent_id', null)->get();
+        
+        $projects = Project::get()->where('id', $id);
+        
+        $projectid = Project::with('comments', 'users')->where('id', $id)->get();
+        foreach ($projectid as $item1) {
+            $pid = $item1->id;
+            $uid = $item1->users;
+        }
+        
+        $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
+        if (!empty($comments)) {
+            return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
+        } else {
+            return view('project.index',compact('tasks', 'pid', 'projects', 'uid' ));
+        }
+
+        //dd($aid);
+        return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
     }
 
     /**
@@ -71,9 +103,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request)
     {
-        $project = Project::findOrFail($request->project_id);
+        $project = Project::findOrFail($request->projectid);
 
         $project->update($request->all());
+
+        $project->users()->sync($request->student);
        
         return back();
     }
@@ -84,8 +118,12 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $project = Project::findOrFail($request->projectid);
+
+        $project->delete();
+       
+        return back();
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -19,13 +18,8 @@ class LoginController extends Controller
     |
     */
     //
-    protected $username = 'userid';
+
     use AuthenticatesUsers;
-
-
-
-
-
 
 
     /*
@@ -45,10 +39,6 @@ class LoginController extends Controller
     // protected $userid = 'userid';
 
 
-
-
-
-
     /**
      * Validate the user login.
      * @param Request $request
@@ -64,10 +54,6 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function username()
-    {
-        return 'userid';
-    }
 
     public function __construct()
     {

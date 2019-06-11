@@ -14,15 +14,22 @@
 
 
 
-
 Auth::routes();
-Route::get('/', 'HomeController@index');
+Route::get('/changePassword','ChangePasswordController@showChangePasswordForm');
+Route::post('/changePassword','ChangePasswordController@changePassword')->name('changePassword');
+Route::get('/password/studentsetpassword', 'Auth\ForgotPasswordController@showResetForm');
 Route::resource('modal','ModalController');
+
+Route::get('/', 'HomeController@index')->middleware('auth');
 Route::resource('supervisor','SupervisorController');
+Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 Route::resource('project','ProjectController');
+Route::resource('task','TaskController');
 
 Route::get('/csv_upload_success', 'CsvController@index'); // localhost:8000/
-Route::post('/uploadFile', 'CsvController@uploadFile');
+//Route::post('uploadFile', 'CsvController@uploadFile');
+
+Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 
 //Route::get('/modal/card/{id}', 'ModalController@show');
 

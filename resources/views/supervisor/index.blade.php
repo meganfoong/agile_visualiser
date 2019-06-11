@@ -1,5 +1,23 @@
 @extends('layouts.app')
 
+@section('supervisorMedia')
+<img class="mr-8"
+    src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}+{{Auth::user()->last_name}}&rounded=true" />
+<div class="media-body ml-3">
+    <h1 class="mb-0"> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</h1>
+    <p class="lead">Supervisor</p>
+</div>
+@endsection
+
+@section('supervisorCrumbs')
+<li class="breadcrumb-item">
+    <i class="material-icons">
+        home
+    </i>
+</li>
+@endsection
+
+
 @section('supervisorNav')
 <ul class="nav nav-tabs nav-justified">
     <li class="nav-item">
