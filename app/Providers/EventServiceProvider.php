@@ -24,6 +24,18 @@ class EventServiceProvider extends ServiceProvider
         TaskCreated::class => [
             AddTaskCreatedEventToActivity::class,
         ],
+
+        'App\Events\TaskUpdated' => [
+            'App\Listeners\AddTaskUpdatedEventToActivity',
+        ],
+
+        'App\Events\TaskDeleted' => [
+            'App\Listeners\AddTaskDeletedEventToActivity',
+        ],
+
+        
+
+      
     ];
 
     /**
