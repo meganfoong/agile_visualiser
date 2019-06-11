@@ -12,6 +12,10 @@ use App\Events\TaskAssigned;
 use App\Events\TaskUpdated;
 use App\Events\TaskDeleted;
 use App\Events\TaskApproved;
+use App\Events\TaskUnapproved;
+use App\Events\TaskStatusChanged;
+use App\Events\TaskCompleted;
+use App\Events\TaskNotCompleted;
 
 class TaskController extends Controller
 {
@@ -140,9 +144,6 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
-        
-        //dd($request->approve);
-        
         $task = Task::findOrFail($request->taskid);
         
         if (!empty($request->assign)) {
@@ -158,11 +159,11 @@ class TaskController extends Controller
             
             if($request->approve == 1 ) {
                 $task->users()->attach(Auth::user()->id);
-                event(new TaskCreated($task));
+                event(new TaskApproved($task));
             } 
             elseif ($request->approve == 2 ) {
                 $task->users()->detach(Auth::user()->id);
-                event(new TaskCreated($task));
+                event(new TaskUnapproved($task));
             }
             return back();
         }
@@ -171,12 +172,21 @@ class TaskController extends Controller
             if ($request->complete == 1 ) {
             
                 $task->update($request->all());
+                event(new TaskCompleted($task));
             } 
             elseif ($request->complete == 2) {
                 $task->update($request->all());
-
+                event(new TaskNotCompleted($task));
                 $task->users()->sync(NULL);
             }
+            return back();
+        }
+
+        if (!empty($request->status)) {
+            
+            $task->update($request->all());
+
+            event(new TaskStatusChanged($task));
             return back();
         }
 

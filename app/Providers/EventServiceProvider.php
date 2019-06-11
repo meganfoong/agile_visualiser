@@ -40,7 +40,23 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\AddTaskApprovedEventToActivity',
         ],
 
-        
+        'App\Events\TaskUnapproved' => [
+            'App\Listeners\AddTaskUnapprovedEventToActivity',
+        ],
+
+        'App\Events\TaskStatusChanged' => [
+            'App\Listeners\AddTaskStatusChangedEventToActivity',
+        ],
+
+        'App\Events\TaskCompleted' => [
+            'App\Listeners\AddTaskCompletedEventToActivity',
+        ],
+
+        'App\Events\TaskNotCompleted' => [
+            'App\Listeners\AddTaskNotCompletedEventToActivity',
+        ],
+
+
     ];
 
     /**

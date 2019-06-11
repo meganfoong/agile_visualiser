@@ -59,8 +59,8 @@
                 </div>
 
                 <div>
-                    <span>Approved: </span>
                     @if (!empty($uid))
+                    <span>Approved: </span>
                     @foreach ($uid as $approve)
                     @foreach ($approve->tasks as $subtask)
                     @if ($subtask->id == $item->id)
@@ -80,13 +80,14 @@
             </div>
 
             <div class="card-footer collapse" id="collapseFooter{{ $item->id }}">
-                @if ($item->assign == Auth::user()->id)
-                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
+                @if ($item->assign == Auth::user()->id && $item->status != 'success')
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}"
                     data-toggle="modal" data-target="#complete_task">
                     <i class="material-icons">
                         check
                     </i>
                 </button>
+
                 <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
                     data-toggle="modal" data-target="#status_task">
                     <i class="material-icons">
@@ -100,7 +101,7 @@
                         check
                     </i>
                 </button>
-                @else
+                @elseif ($item->assign != Auth::user()->id)
                 <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-toggle="modal"
                     data-target="#approve_task">
                     <i class="material-icons">
@@ -108,14 +109,14 @@
                     </i>
                 </button>
                 @endif
-
+                @if ($item->status != 'success')
                 <button type="button" data-myid="{{$item->id}}" data-myassign="{{$item->assign}}" class="btn btn-sm "
                     data-toggle="modal" data-target="#assign_task">
                     <i class="material-icons">
                         person
                     </i>
                 </button>
-
+                @endif
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
                     data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}" class="btn btn-sm "
                     data-toggle="modal" data-target="#edit_task">
@@ -131,7 +132,6 @@
                     </i>
                 </button>
             </div>
-
         </div>
     </div>
     @endforeach
@@ -331,10 +331,12 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <input type="hidden" name="taskid" id="taskid" value="">
-                    <input type="hidden" name="status" id="status" value="success">
                     <input type="hidden" name="approve" id="approve" value="1">
+                    <input type="hidden" name="status" id="status" value="success">
                     <h3>Are you sure you want to complete task?</h3>
                     <h3>This cannot be reverted!</h3>
+                    
+
                 </div>
 
                 <!-- Modal footer -->
@@ -536,11 +538,10 @@
 
         var button = $(event.relatedTarget)
         var id = button.data('myid')
-        var status = button.data('mystatus')
         var modal = $(this)
 
         modal.find('.modal-body #taskid').val(id);
-        modal.find('.modal-body #status').val(status);
+
 
     })
 

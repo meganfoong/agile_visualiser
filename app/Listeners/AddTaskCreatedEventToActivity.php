@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Events\TaskCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\User;
 use App\Task;
 use App\Activity;
 use App\Project;
@@ -31,8 +30,6 @@ class AddTaskCreatedEventToActivity
      */
     public function handle(TaskCreated $event)
     {
-
-
         $author = Auth::user()->first_name; // the currently logged in user
         // $event->task
         $title = $event->task->title;

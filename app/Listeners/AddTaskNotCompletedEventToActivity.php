@@ -2,14 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskApproved;
+use App\Events\TaskNotCompleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Task;
 use App\Activity;
 use Illuminate\Support\Facades\Auth;
 
-class AddTaskApprovedEventToActivity
+class AddTaskNotCompletedEventToActivity
 {
     /**
      * Create the event listener.
@@ -24,37 +24,28 @@ class AddTaskApprovedEventToActivity
     /**
      * Handle the event.
      *
-     * @param  TaskApproved  $event
+     * @param  TaskNotCompleted  $event
      * @return void
      */
-    public function handle(TaskApproved $event)
+    public function handle(TaskNotCompleted $event)
     {
         $author = Auth::user()->first_name; // the currently logged in user
+        // $event->task
+        $title = $event->task->title;
+        $pid = $event->task->project_id;
+        $status = $event->task->status;
 
-        $subtask = Task::where('id', $event->task->id)->get();
-        foreach ($subtask as $item1) {
-            $title = $item1->title;
-            $pid = $item1->project_id;
-            $parent = $item1->parent_id;
-            $status = $item1->status;
-        }
-        
-        $task = Task::where('id', $parent)->get();
-        foreach ($task as $item2) {
-            $tTitle = $item2->title;
-        }
-
-        if ($status == 'success') {
+        if ($status == 'warning') {
             $insertData = new Activity([
                 "project_id" => $pid,
-                "body" => "$author approved $title and changed status to complete in task $tTitle",
+                "body" => "$author changed $title status to on track as task is not yet complete",
                 "created_at" => now()
             ]);
             $insertData->save();
-        } else {
+        } elseif ($status == 'danger') {
             $insertData = new Activity([
                 "project_id" => $pid,
-                "body" => "$author approved $title in task $tTitle",
+                "body" => "$author changed $title status to off track as task is not yet complete",
                 "created_at" => now()
             ]);
             $insertData->save();

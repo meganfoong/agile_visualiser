@@ -2,16 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskAssigned;
+use App\Events\TaskUapproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Task;
-use App\Project;
-use App\User;
 use App\Activity;
 use Illuminate\Support\Facades\Auth;
 
-class AddTaskAssignedEventToActivity
+class AddTaskUnapprovedEventToActivity
 {
     /**
      * Create the event listener.
@@ -26,19 +24,17 @@ class AddTaskAssignedEventToActivity
     /**
      * Handle the event.
      *
-     * @param  TaskAssigned  $event
+     * @param  TaskUapproved  $event
      * @return void
      */
-    public function handle(TaskAssigned $event)
+    public function handle(TaskUapproved $event)
     {
-        
         $author = Auth::user()->first_name; // the currently logged in user
 
         $subtask = Task::where('id', $event->task->id)->get();
         foreach ($subtask as $item1) {
             $title = $item1->title;
             $pid = $item1->project_id;
-            $uid = $item1->assign;
             $parent = $item1->parent_id;
         }
         
@@ -46,15 +42,10 @@ class AddTaskAssignedEventToActivity
         foreach ($task as $item2) {
             $tTitle = $item2->title;
         }
-
-        $user = User::where('id', $uid)->get();
-        foreach ($user as $item3) {
-            $assign = $item3->first_name;
-        }
         
         $insertData = new Activity([
             "project_id" => $pid,
-            "body" => "$author assigned $assign to $title in task $tTitle",
+            "body" => "$author unapproved $title in task $tTitle",
             "created_at" => now()
         ]);
         $insertData->save();
