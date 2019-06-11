@@ -121,7 +121,7 @@
                     data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}" class="btn btn-sm "
                     data-toggle="modal" data-target="#edit_task">
                     <i class="material-icons">
-                        update
+                        edit
                     </i>
                 </button>
 
@@ -496,6 +496,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $('#edit_task').on('show.bs.modal', function (event) {
 

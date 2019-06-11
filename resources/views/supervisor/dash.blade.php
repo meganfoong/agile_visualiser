@@ -6,22 +6,26 @@
 <div class="row content-list-head">
 
     <div class="col-auto">
-
-
+        @if (!empty($comments) ?? !empty($activities))
+        <h3>Dashboard for {{$title}}</h3>
+        @else
         <h3>Dashboard</h3>
+        @endif
     </div>
 
     <div class="col-auto">
         <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#choose_project">
             <i class="material-icons">
-                more_vert
+                search
             </i>
         </button>
     </div>
 
 </div>
 
-{{-- <div class="card card-team">
+
+@if (!empty($comments))
+<div class="card card-team">
     <ul class="list-group list-group-flush">
         <li class="list-group-item list-group-item-action">
             <b>Comments</b>
@@ -72,7 +76,8 @@
         </form>
     </ul>
 </div>
-
+@endif
+@if (!empty($activities))
 <div class="card card-team">
     <ul class="list-group list-group-flush" style="height: 1000px; overflow-y: scroll;" id='comment'>
         <li class="list-group-item list-group-item-action"><b>Activities</b>
@@ -88,6 +93,7 @@
         @endforeach
     </ul>
 </div>
+@endif
 
 <script>
     var comment = document.getElementById("comment");
@@ -96,7 +102,8 @@
         var activity = document.getElementById("activity");
         activity.scrollTop = objDiv.scrollHeight;
     
-</script> --}}
+</script>
+
 
 <!-- The Modal for adding a project -->
 <div class="modal fade" id="choose_project">

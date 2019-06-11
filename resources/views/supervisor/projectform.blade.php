@@ -30,7 +30,7 @@
 <div class="form-group">
     <label for="student[]">Students:</label>
     <select name="student[]" class="selectpicker" multiple>
-        @foreach ($users as $user)
+        @foreach ($students as $user)
         @if ($user->is_supervisor == 0)
         <option value="{{$user->id}}" class="text-dark">{{$user->id}} - {{$user->first_name}}</option>
         {{-- <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br> --}}

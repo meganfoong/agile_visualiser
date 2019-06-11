@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Hash;
-use App\Csv;
 use App\Comment;
 use App\Project;
+use App\Activity;
+
 class SupervisorController extends Controller
 {
     /**
@@ -22,35 +23,10 @@ class SupervisorController extends Controller
 
     public function index()
     {
-        
-        //$projects = Project::with('users')->where('user_id', $id)->get();
-        //$users = User::all();
-        //$projects = Project::all();
-        //return view('supervisor.index',compact('users'));
-        
-        $users = User::all();
-        //$comments = Auth::user()->comments;
-        
-        //$comments = User::with('students')->where('parent_id', $id)->get();
-        
-        $comments = Comment::
-        join('users', 'comments.user_id', '=', 'users.id')
-        ->select('comments.body', 'users.first_name', 'comments.created_at', 'users.parent_id', 'comments.user_id', 'users.id')
-        ->where(function ($query){
-            $id = Auth::user()->id; // the currently logged in user
-            $query->where('users.parent_id', $id); // supervisor can view their students' comments
-            $query->orWhere('comments.user_id', 'users.parent_id'); //student can view their supervisor's comments
-            $query->orWhere('comments.user_id', $id);// supervisor/student can view their own comments
-        })
-        ->orderBy('comments.created_at', 'desc')
-        ->get();
-        //->orWhere('comments.user_id', 'users.id') 
-        //->orWhere('comments.user_id', $id) // supervisor/student can view their own comments
-        
-        $id = Auth::user()->id; // the currently logged in user
         $projects = Auth::user()->projects;
-        $students = User::where('parent_id', $id)->get();
-        return view('supervisor.index',compact('projects', 'comments', 'users', 'students'));
+        $students = User::where('parent_id', Auth::user()->id)->get();
+
+        return view('supervisor.index', compact('projects', 'students'));
     }
 
     /**
@@ -71,6 +47,32 @@ class SupervisorController extends Controller
      */
     public function store(Request $request)
     {
+        if (!empty($request->projectid)) {
+            $projects = Auth::user()->projects;
+            $students = User::where('parent_id', Auth::user()->id)->get();
+            $project = Project::with('comments', 'users')->where('id', $request->projectid)->get();
+
+            foreach ($project as $item1) {
+                $title = $item1->title;
+                $pid = $item1->id;
+                $uid = $item1->users;
+            }
+            $activities = Activity::with('projects')->where('project_id', $pid)->orderBy('created_at', 'desc')->get();
+
+            $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
+
+            if (!empty($comments) && !empty($activities)) {
+                return view('supervisor.index', compact('activities', 'comments', 'uid', 'pid', 'projects', 'students', 'title'));
+            } elseif (!empty($comments) && empty($activities)) {
+                return view('supervisor.index', compact('comments', 'uid', 'pid', 'projects', 'students', 'title'));
+            } elseif (!empty($activities) && empty($comments)) {
+                return view('supervisor.index', compact('activities', 'uid', 'pid', 'projects', 'students',  'title'));
+            }
+        }
+
+
+
+
         if ($request->input('submit') != null) {
 
             $file = $request->file('file');
@@ -113,9 +115,9 @@ class SupervisorController extends Controller
                         $num = count($filedata);
 
                         // Skip first row (Remove below comment if you want to skip the first row)
-                        if($i == 0){
-                        $i++;
-                        continue; 
+                        if ($i == 0) {
+                            $i++;
+                            continue;
                         }
                         for ($c = 0; $c < $num; $c++) {
                             $importData_arr[$i][] = $filedata[$c];
@@ -128,7 +130,7 @@ class SupervisorController extends Controller
                     $password = Hash::make('password1');
                     $id = Auth::user()->id; // the currently logged in user
                     foreach ($importData_arr as $importData) {
-                       
+
                         $insertData = array(
 
                             "id" => (int)$importData[0],
@@ -152,11 +154,12 @@ class SupervisorController extends Controller
             } else {
                 Session::flash('message', 'Invalid File Extension.');
             }
+            return back();
         }
 
         // Redirect to index
         //return redirect()->action('CsvController@index');
-        return back();
+
     }
 
     /**
@@ -165,14 +168,8 @@ class SupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    { 
-        
-        if (!empty($request->projectid)) {
-            $project = Project::where('id', $request->projectid)->get();
-            dd($project);
-        }
-    }
+    public function show()
+    { }
 
     /**
      * Show the form for editing the specified resource.

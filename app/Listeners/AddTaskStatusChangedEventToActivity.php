@@ -42,23 +42,60 @@ class AddTaskStatusChangedEventToActivity
             $tTitle = $item2->title;
         }
 
-        if ($status == 'warning') {
-            $insertData = new Activity([
-                "project_id" => $pid,
-                "body" => "$author changed $title status to on track in task $tTitle",
-                "created_at" => now(),
-                "type" => 'warning'
-            ]);
-            $insertData->save();
+        $project = Project::where("id", $pid)->get();
+        foreach ($project as $item1) {
+            $pTitle = $item1->title;
         }
-        elseif ($status == 'danger') {
-            $insertData = new Activity([
-                "project_id" => $pid,
-                "body" => "$author changed $title status to off track in task $tTitle",
-                "created_at" => now(),
-                "type" => 'danger'
-            ]);
-            $insertData->save();
+
+        if (!empty($event->task->parent_id)) {
+            if ($status == 'warning') {
+                $insertData = new Activity([
+                    "project_id" => $pid,
+                    "body" => "$author changed $title status to on track in task $tTitle",
+                    "created_at" => now(),
+                    "type" => 'warning'
+                ]);
+                $insertData->save();
+            }
+            elseif ($status == 'danger') {
+                $insertData = new Activity([
+                    "project_id" => $pid,
+                    "body" => "$author changed $title status to off track in task $tTitle",
+                    "created_at" => now(),
+                    "type" => 'danger'
+                ]);
+                $insertData->save();
+            }
+        } else {
+            if ($status == 'success') {
+                $insertData = new Activity([
+                    "project_id" => $pid,
+                    "body" => "$author changed $title status to complete in project $pTitle",
+                    "created_at" => now(),
+                    "type" => 'success'
+                ]);
+                $insertData->save();
+            }
+            elseif ($status == 'warning') {
+                $insertData = new Activity([
+                    "project_id" => $pid,
+                    "body" => "$author changed $title status to on track in project $pTitle",
+                    "created_at" => now(),
+                    "type" => 'warning'
+                ]);
+                $insertData->save();
+            }
+            elseif ($status == 'danger') {
+                $insertData = new Activity([
+                    "project_id" => $pid,
+                    "body" => "$author changed $title status to off track in project $pTitle",
+                    "created_at" => now(),
+                    "type" => 'danger'
+                ]);
+                $insertData->save();
+            }
         }
+
+        
     }
 }
