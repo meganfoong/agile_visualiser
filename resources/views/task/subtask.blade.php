@@ -1,4 +1,3 @@
-
 <div class="row content-list-head">
     <div class="col-auto">
         <h3>Sub-tasks</h3>
@@ -38,7 +37,7 @@
             </div>
             <div class="card-body">
 
-                    
+
                 <button class="btn btn-sm float-right" type="button" data-toggle="collapse"
                     data-target="#collapseFooter{{ $item->id }}" aria-expanded="false" aria-controls="collapseFooter">
                     <i class="material-icons">
@@ -53,7 +52,7 @@
 
                 <div>
                     @foreach ($aid as $user)
-                    @if ($user->id ==  $item->assign)
+                    @if ($user->id == $item->assign)
                     <span>Assigned: {{ $user->first_name }}</span>
                     @endif
                     @endforeach
@@ -65,7 +64,7 @@
                     <span>{{$approve->first_name}}</span>
                     @endforeach
                 </div>
-                
+
                 @if ($item->complete == 1)
                 <hr>
                 <div class="text-center">
@@ -83,8 +82,8 @@
                     </i>
                 </button>
                 @elseif (Auth::user()->is_supervisor == 1)
-                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}" data-complete=""
-                    data-toggle="modal" data-target="#realstatus_task">
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-mystatus="{{$item->status}}"
+                    data-complete="" data-toggle="modal" data-target="#realstatus_task">
                     <i class="material-icons">
                         check
                     </i>
@@ -99,9 +98,16 @@
                 @endif
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
                     data-mydescription="{{$item->description}}" data-mystatus="{{$item->status}}"
-                    data-myassign="{{$item->assign}}" class="btn btn-sm " data-toggle="modal" data-target="#edit_task">
+                    class="btn btn-sm " data-toggle="modal" data-target="#edit_task">
                     <i class="material-icons">
                         update
+                    </i>
+                </button>
+
+                <button type="button" data-myid="{{$item->id}}" data-myassign="{{$item->assign}}" class="btn btn-sm "
+                    data-toggle="modal" data-target="#assign_task">
+                    <i class="material-icons">
+                        person
                     </i>
                 </button>
 
@@ -398,6 +404,49 @@
     </div>
 </div>
 
+<!-- The Modal for the assigning a user to a task -->
+<div class="modal fade" id="assign_task">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Assign user to Task</h5><br>
+
+                <div class="modal-options">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
+                        <i class="material-icons">
+                            close
+                        </i>
+                        <br>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <form method="POST" action="{{route('task.update', 'redirect')}}" class="was-validated">
+                {{method_field('PATCH')}}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="hidden" name="taskid" id="taskid" value="">
+                    @include('task.assignform')
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="material-icons">
+                                check
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $('#edit_task').on('show.bs.modal', function (event) {
 
@@ -413,10 +462,6 @@
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #des').val(description);
         modal.find('.modal-body #status').val(status);
-        modal.find('.modal-body #assign').val(assign);
-
-
-
     })
 
 
@@ -463,5 +508,16 @@
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #status').val(status);
         modal.find('.modal-body #complete').val(complete);
+    })
+
+    $('#assign_task').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget)
+        var id = button.data('myid')
+        var assign = button.data('myassign')
+        var modal = $(this)
+
+        modal.find('.modal-body #taskid').val(id);
+        modal.find('.modal-body #assign').val(assign);
     })
 </script>

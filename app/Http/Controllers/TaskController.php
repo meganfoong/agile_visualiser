@@ -8,6 +8,7 @@ use App\Project;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Events\TaskCreated;
+use App\Events\TaskAssigned;
 
 class TaskController extends Controller
 {
@@ -19,7 +20,7 @@ class TaskController extends Controller
     public function index()
     {
         $projects = Task::with('users')->get();
-        dd($projects);
+        //dd($projects);
     }
 
     /**
@@ -138,17 +139,25 @@ class TaskController extends Controller
         //dd($request->approve);
         
         $task = Task::findOrFail($request->taskid);
+        
+        if (!empty($request->assign)) {
+            
+            $task->update($request->all());
+
+            event(new TaskAssigned($task));
+            return back();
+        }
 
         if (!empty($request->approve)) {
-            
             $task->update(collect($request)->except('approve')->toArray());
-            //dd($request);
+            
             if($request->approve == 1 ) {
                 $task->users()->attach(Auth::user()->id);
             } 
             elseif ($request->approve == 2 ) {
                 $task->users()->detach(Auth::user()->id);
             }
+            return back();
         }
 
         if (!empty($request->complete)) {
@@ -161,6 +170,7 @@ class TaskController extends Controller
 
                 $task->users()->sync(NULL);
             }
+            return back();
         }
 
         $task->update($request->all());

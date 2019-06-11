@@ -7,7 +7,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\TaskCreated;
+use App\Events\TaskAssigned;
 use App\Listeners\AddTaskCreatedEventToActivity;
+use App\Listeners\AddTaskAssignedEventToActivity;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
 
         TaskCreated::class => [
             AddTaskCreatedEventToActivity::class,
+        ],
+
+        TaskAssigned::class => [
+            AddTaskAssignedEventToActivity::class,
         ],
     ];
 

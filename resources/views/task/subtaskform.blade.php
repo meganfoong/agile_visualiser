@@ -26,7 +26,7 @@
 </div> --}}
 
 
-<div class="form-group">
+{{-- <div class="form-group">
     <label for="assign">Assign:</label>
     <select name="assign" class="custom-select custom-select-sm">
         @foreach ($aid as $item)
@@ -35,7 +35,7 @@
         @endif
         @endforeach
     </select>
-</div>
+</div> --}}
 
 <!-- <div class="form-check-inline">
     <div class="custom-control custom-checkbox mb-6">
