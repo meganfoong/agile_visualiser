@@ -29,7 +29,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">New Project</h5><br>
+                <h5 class="modal-title">Choose Project</h5><br>
 
                 <div class="modal-options">
                     <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
