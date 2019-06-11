@@ -33,4 +33,9 @@ class Project extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }

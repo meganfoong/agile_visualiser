@@ -68,13 +68,18 @@ class ProjectController extends Controller
         $projectid = Project::with('comments', 'users')->where('id', $id)->get();
         foreach ($projectid as $item1) {
             $pid = $item1->id;
+            $uid = $item1->users;
         }
         
         $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
+        if (!empty($comments)) {
+            return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
+        } else {
+            return view('project.index',compact('tasks', 'pid', 'projects', 'uid' ));
+        }
 
-        $users = Comment::with('users')->get();
-        //dd($users->users);
-        return view('project.index',compact('tasks', 'pid', 'comments', 'projects' ));
+        //dd($aid);
+        return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
     }
 
     /**

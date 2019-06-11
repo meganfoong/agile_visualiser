@@ -7,7 +7,6 @@ use App\Task;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
 
-
 class TaskController extends Controller
 {
     /**
@@ -39,7 +38,10 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+
         $task = Task::create($request->all());
+        
+        //event(new TaskCreated($task));
 
         return back(); 
     }
@@ -77,12 +79,26 @@ class TaskController extends Controller
         foreach ($approve as $item4) {
             $uid = $item4->users;
         }
+
+        // foreach ($aid as $i) {
+        //     $u[] = $i->id;
+        // }
+        
+
+
+        //$count = Task::with('parent')->where('parent_id', $tid)->where('assign', $u)->get();
+        
+        //dd($u);
+        //dd(count($count->assign->where('assign', 18982029)));
+
         if (!empty($uid)) {
             return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
         } else {
             return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task'));
         }
         //$a = $aid->where('pivot.project_id', $pid);
+
+        
         
 
         // $assign = Auth::user()->with('projects')->get();
