@@ -35,7 +35,7 @@
                 <div class="row">
 
                     <div class="col-lg">
-                        <input type="text" class="form-control" rows="2" placeholder="Enter new comment">
+                        <input type="text" name ="body" class="form-control" rows="2" placeholder="Enter new comment">
                     </div>
                     <div class="col-auto float-right">
                         <button type="submit" class="btn btn-sm">
