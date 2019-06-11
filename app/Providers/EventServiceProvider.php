@@ -6,10 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Events\TaskCreated;
-use App\Events\TaskAssigned;
-use App\Listeners\AddTaskCreatedEventToActivity;
-use App\Listeners\AddTaskAssignedEventToActivity;
+
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,12 +20,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
-        TaskCreated::class => [
-            AddTaskCreatedEventToActivity::class,
+        'App\Events\TaskCreated' => [
+            'App\Listeners\AddTaskCreatedEventToActivity',
         ],
 
-        TaskAssigned::class => [
-            AddTaskAssignedEventToActivity::class,
+        'App\Events\TaskAssigned' => [
+            'App\Listeners\AddTaskAssignedEventToActivity',
         ],
         
         'App\Events\TaskUpdated' => [
