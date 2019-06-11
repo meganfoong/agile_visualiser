@@ -105,7 +105,7 @@
 </script>
 
 
-<!-- The Modal for adding a project -->
+<!-- The Modal for choosing a project dash -->
 <div class="modal fade" id="choose_project">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">

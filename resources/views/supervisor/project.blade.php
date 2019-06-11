@@ -12,7 +12,7 @@
         </button>
     </div>
 
-    <div class="col float-right">
+    {{-- <div class="col float-right">
         <div class="float-right">
             <div class="input-group input-group-round">
                 <div class="input-group-prepend" >
@@ -23,7 +23,7 @@
                 <input type="search" class="form-control filter-list-input" placeholder="Filter Projects" aria-label="Filter Projects">
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 <br>
@@ -81,7 +81,7 @@
 </div>
 
 <br>
-
+{{-- 
 <div class="row content-list-head">
     <div class="col">
         <h3>Past Projects</h3>
@@ -99,7 +99,7 @@
 
 <div id="myDIV">
     <div class="content-list-body row">
-        {{-- <div class="col-md-6">
+        <div class="col-md-6">
             <div class="lock">
                 <div id="overlay" onclick="off()">
                 </div>
@@ -135,9 +135,9 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
-</div>
+</div> --}}
 
 <!-- The Modal for adding a project -->
 <div class="modal fade" id="new_project">

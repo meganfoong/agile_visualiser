@@ -33,7 +33,6 @@
         @foreach ($students as $user)
         @if ($user->is_supervisor == 0)
         <option value="{{$user->id}}" class="text-dark">{{$user->id}} - {{$user->first_name}}</option>
-        {{-- <input type="checkbox" name="student[]" value="{{$user->id}}"> {{$user->first_name}}<br> --}}
         @endif
         @endforeach
     </select>

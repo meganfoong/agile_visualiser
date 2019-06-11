@@ -9,7 +9,7 @@
         data-mysupervisor="{{$item->supervisorDetails}}" data-myclient="{{$item->clientDetails}}"
          class="btn btn-sm float-right" data-toggle="modal" data-target="#edit_project">
             <i class="material-icons">
-                more_vert
+                edit
             </i>
         </button>
     </div>

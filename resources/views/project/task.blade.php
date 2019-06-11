@@ -9,7 +9,7 @@
         </i>
     </button>
 
-    <form class="col">
+    {{-- <form class="col">
         <div class="float-right">
             <div class="input-group input-group-round">
                 <div class="input-group-prepend">
@@ -22,7 +22,7 @@
                     aria-label="Filter Projects">
             </div>
         </div>
-    </form>
+    </form> --}}
 </div>
 
 <br>
@@ -48,11 +48,7 @@
                         <h5 data-filter-by="text">{{ $item->title }}</h5>
                     </a>
                     <span>{{ $item->description }}</span>
-
-
                 </div>
-
-
 
                 <div>
                     <span>Start: {{$item->startDate}} End: {{$item->dueDate}}</span>

@@ -9,7 +9,7 @@
         </i>
     </button>
 
-    <form class="col">
+    {{-- <form class="col">
         <div class="float-right">
             <div class="input-group input-group-round">
                 <div class="input-group-prepend">
@@ -22,7 +22,7 @@
                     aria-label="Filter Projects">
             </div>
         </div>
-    </form>
+    </form> --}}
 </div>
 
 <br>
@@ -81,8 +81,8 @@
 
             <div class="card-footer collapse" id="collapseFooter{{ $item->id }}">
                 @if ($item->assign == Auth::user()->id && $item->status != 'success')
-                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}"
-                    data-toggle="modal" data-target="#complete_task">
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-toggle="modal"
+                    data-target="#complete_task">
                     <i class="material-icons">
                         check
                     </i>
@@ -335,7 +335,7 @@
                     <input type="hidden" name="status" id="status" value="success">
                     <h3>Are you sure you want to complete task?</h3>
                     <h3>This cannot be reverted!</h3>
-                    
+
 
                 </div>
 

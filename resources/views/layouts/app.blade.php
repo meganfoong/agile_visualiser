@@ -30,7 +30,7 @@
 
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
-    
+
     @yield('piechart')
 </head>
 
@@ -60,7 +60,7 @@
                         </li>
                         @endif
                         @else
-                        
+
                         <li style="margin: auto">
                             {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                         </li>
@@ -158,7 +158,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-10">
                     <div class="page-header mb-4">
-                        
+
                         <div class="media">
                             @yield('supervisorMedia')
                             @yield('projectMedia')
@@ -207,7 +207,7 @@
                                 @yield('dash')
                             </div>
                         </div>
-                        
+
                         <!-- Overview tab starts here -->
                         <div class="tab-pane fade show" id="nav-overview" role="tabpanel"
                             aria-labelledby="nav-overview-tab">
@@ -253,7 +253,8 @@
                         </div>
 
                         <!-- Project tab starts here -->
-                        <div class="tab-pane fade" id="nav-subContribution" role="tabpanel" aria-labelledby="nav-subContribution-tab">
+                        <div class="tab-pane fade" id="nav-subContribution" role="tabpanel"
+                            aria-labelledby="nav-subContribution-tab">
                             <div class="tab-content">
                                 @yield('subContribution')
                             </div>
