@@ -47,6 +47,9 @@ class HomeController extends Controller
        // elseif($pid==null){
          //   return  view ('welcome');
        // }
+        if (auth()->user()->password_change_at == null) {
+            return redirect(route('changePassword'));
+        }
         return Redirect::to("project/{$pid}");
     }
 

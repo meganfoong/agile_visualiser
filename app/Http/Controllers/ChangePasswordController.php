@@ -36,6 +36,7 @@ class ChangePasswordController extends Controller
         //Change Password
         $user = Auth::user();
         $user->password = Hash::make($request->get('new-password'));
+        $user->password_change_at = \Carbon\Carbon::now();
         $user->save();
         return redirect()->back()->with("success","Password changed successfully !");
     }
