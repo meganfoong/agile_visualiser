@@ -1,3 +1,4 @@
+@if (!empty($comments))
 <div class="card card-team">
     <ul class="list-group list-group-flush">
         <li class="list-group-item list-group-item-action">
@@ -49,7 +50,8 @@
         </form>
     </ul>
 </div>
-
+@endif
+@if (!empty($activities))
 <div class="card card-team">
     <ul class="list-group list-group-flush" style="height: 1000px; overflow-y: scroll;" id='comment'>
         <li class="list-group-item list-group-item-action"><b>Activities</b>
@@ -65,7 +67,7 @@
         @endforeach
     </ul>
 </div>
-
+@endif
 <script>
     var comment = document.getElementById("comment");
     comment.scrollTop = objDiv.scrollHeight;

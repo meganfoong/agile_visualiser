@@ -46,7 +46,23 @@
                 </button>
 
                 <div class="card-title">
-                    <h5 data-filter-by="text">{{ $item->title }}</h5>
+                    <div class="row">
+                        <div class="col-auto">
+                            <a href="{{ URL::to('task', $item->id) }}">
+                                <h5 data-filter-by="text">{{ $item->title }}</h5>
+                            </a>
+                        </div>
+
+                        <div class="col-auto">
+                            @if ($item->status == 'success')
+                            <span class="d-inline badge badge-{{$item->status}}">Complete</span>
+                            @elseif ($item->status == 'warning')
+                            <span class="badge badge-{{$item->status}}">On Track</span>
+                            @elseif ($item->status == 'danger')
+                            <span class="badge badge-{{$item->status}}">Off Track</span>
+                            @endif
+                        </div>
+                    </div>
                     <span>{{ $item->description }}</span>
                 </div>
 

@@ -12,6 +12,7 @@ use App\Comment;
 use App\Project;
 use App\Activity;
 
+
 class SupervisorController extends Controller
 {
     /**
@@ -70,6 +71,11 @@ class SupervisorController extends Controller
             }
         }
 
+        if (!empty($request->single)) {
+            $student = User::create($request->all());
+
+            return back();
+        }
 
 
 

@@ -21,11 +21,11 @@
     </select>
 </div> --}}
 
-<div class="form-group">
+{{-- <div class="form-group">
     <label for="startDate">Start Date:</label>
     <input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
 </div>
 <div class="form-group">
     <label for="dueDate">Due Date:</label>
     <input type="date" class="form-control form-control-sm" id="dueDate" name="dueDate">
-</div>
+</div> --}}

@@ -48,13 +48,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $task = Task::create($request->all());
-        
+
         // call our event here, to insert task into activity table
         event(new TaskCreated($task));
 
-        return back(); 
+        return back();
     }
 
     /**
@@ -64,12 +64,13 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Task $tasks, $id)
-    {   
+    {
         $tasks = Task::with('parent')->where('parent_id', $id)->get();
 
         $parentid = Task::with('parent')->where('id', $id)->get();
         foreach ($parentid as $item1) {
             $tid = $item1->id;
+            $tname = $item1->title;
         }
 
         $task = Task::get()->where('id', $id);
@@ -91,37 +92,39 @@ class TaskController extends Controller
             $uid = $item4->users;
         }
 
-        //dd($uid);
+        $userCounts = Task::with('parent')->where('parent_id', $tid)->wherenotNUll('assign')->get();
 
-        // foreach ($aid as $i) {
-        //     $u[] = $i->id;
-        // }
-        
+        $members = User::join('tasks', 'users.id', 'tasks.assign')->where('tasks.parent_id', $tid)->select('users.first_name')->distinct()->get();
 
-
-        //$count = Task::with('parent')->where('parent_id', $tid)->where('assign', $u)->get();
-        
-        //dd($u);
-        //dd(count($count->assign->where('assign', 18982029)));
-
-        if (!empty($uid)) {
-            return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
-        } else {
-            return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task'));
+        foreach ($userCounts as $user) {
+            $alluserCountdata[] = $user->assign;
         }
-        //$a = $aid->where('pivot.project_id', $pid);
 
+        if (!empty($alluserCountdata)) {
+            $alltasks = array_count_values($alluserCountdata);
+
+
+            foreach ($alltasks as $alltask) {
+                $alltaskF[] = $alltask;
+            }
+
+            foreach ($members as $member) {
+                $allmemberF[] = $member->first_name;
+            }
+        }
         
-        
-
-        // $assign = Auth::user()->with('projects')->get();
-        // foreach ($assign as $item) {
-        //     $aid = $item->projects;
-        // }
-        // $users = $aid->where('id', $pid);
-        // dd($aid);
-
-        return view('task.index',compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
+        if (!empty($alltasks) && !empty($uid) ) {
+            return view('task.index', compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid', 'alltaskF', 'allmemberF', 'tname'));
+        } 
+        elseif (!empty($uid) && empty($alltasks)) {
+            return view('task.index', compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'uid'));
+        } 
+        elseif (empty($uid) && !empty($alltasks)) {
+            return view('task.index', compact('tasks', 'pid', 'tid', 'aid', 'project', 'task', 'alltaskF', 'allmemberF', 'tname'));
+        } 
+        else {
+            return view('task.index', compact('tasks', 'pid', 'tid', 'aid', 'project', 'task'));
+        }
     }
 
     /**
@@ -145,9 +148,9 @@ class TaskController extends Controller
     public function update(Request $request)
     {
         $task = Task::findOrFail($request->taskid);
-        
+
         if (!empty($request->assign)) {
-            
+
             $task->update($request->all());
 
             event(new TaskAssigned($task));
@@ -156,12 +159,11 @@ class TaskController extends Controller
 
         if (!empty($request->approve)) {
             $task->update(collect($request)->except('approve')->toArray());
-            
-            if($request->approve == 1 ) {
+
+            if ($request->approve == 1) {
                 $task->users()->attach(Auth::user()->id);
                 event(new TaskApproved($task));
-            } 
-            elseif ($request->approve == 2 ) {
+            } elseif ($request->approve == 2) {
                 $task->users()->detach(Auth::user()->id);
                 event(new TaskUnapproved($task));
             }
@@ -169,12 +171,11 @@ class TaskController extends Controller
         }
 
         if (!empty($request->complete)) {
-            if ($request->complete == 1 ) {
-            
+            if ($request->complete == 1) {
+
                 $task->update($request->all());
                 event(new TaskCompleted($task));
-            } 
-            elseif ($request->complete == 2) {
+            } elseif ($request->complete == 2) {
                 $task->update($request->all());
                 event(new TaskNotCompleted($task));
                 $task->users()->sync(NULL);
@@ -183,7 +184,7 @@ class TaskController extends Controller
         }
 
         if (!empty($request->status)) {
-            
+
             $task->update($request->all());
 
             event(new TaskStatusChanged($task));
@@ -191,7 +192,7 @@ class TaskController extends Controller
         }
 
         $task->update($request->all());
-        
+
         // event to update task in activity table
         event(new TaskUpdated($task));
         return back();

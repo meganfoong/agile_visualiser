@@ -2,6 +2,11 @@
     <div class="col-auto">
         <h3>Student List</h3>
     </div>
+    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#csv_student">
+        <i class="material-icons">
+            insert_drive_file
+        </i>
+    </button>
     <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#new_student">
         <i class="material-icons">
             add
@@ -29,7 +34,6 @@
                 <tr>
                     <th>Student ID</th>
                     <th>Name</th>
-                    <th>PX History</th>
                 </tr>
             </thead>
 
@@ -38,7 +42,6 @@
                 <tr>
                     <td>{{$student->id}}</td>
                     <td>{{$student->first_name}} {{$student->last_name}}</td>
-                    <td><i></i></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -46,8 +49,8 @@
     </div>
 </div>
 
-<!-- The Modal for adding students -->
-<div class="modal fade" id="new_student">
+<!-- The Modal for adding students by csv -->
+<div class="modal fade" id="csv_student">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -85,6 +88,49 @@
                                 Upload
                             </button>
                         </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal for adding students -->
+<div class="modal fade" id="new_student">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Add Student</h5><br>
+
+                <div class="modal-options">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
+                        <i class="material-icons">
+                            close
+                        </i>
+                        <br>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <form method="POST" action="{{route('supervisor.store')}}" class="was-validated">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="password" id="password" value="{{Hash::make('password1')}}">
+                    <input type="hidden" name="single" id="single" value="1">
+                    @include('supervisor.studentform')
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="material-icons">
+                                check
+                            </i>
+                        </button>
                     </div>
                 </div>
             </form>

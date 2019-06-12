@@ -33,7 +33,8 @@
         <div class="card card-team">
             <div class="progress">
                 <div class="progress-bar bg-{{ $item->status }}" role="progressbar" style="width: 100%"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                </div>
             </div>
             <div class="card-body">
                 <button class="btn btn-sm float-right" type="button" data-toggle="collapse"
@@ -44,9 +45,23 @@
                 </button>
 
                 <div class="card-title">
-                    <a href="{{ URL::to('task', $item->id) }}">
-                        <h5 data-filter-by="text">{{ $item->title }}</h5>
-                    </a>
+                    <div class="row">
+                        <div class="col-auto">
+                            <a href="{{ URL::to('task', $item->id) }}">
+                                <h5 data-filter-by="text">{{ $item->title }}</h5>
+                            </a>
+                        </div>
+
+                        <div class="col-auto">
+                            @if ($item->status == 'success')
+                            <span class="d-inline badge badge-{{$item->status}}">Complete</span>
+                            @elseif ($item->status == 'warning')
+                            <span class="badge badge-{{$item->status}}">On Track</span>
+                            @elseif ($item->status == 'danger')
+                            <span class="badge badge-{{$item->status}}">Off Track</span>
+                            @endif
+                        </div>
+                    </div>
                     <span>{{ $item->description }}</span>
                 </div>
 
@@ -57,8 +72,8 @@
 
             <div class="card-footer collapse" id="collapseFooter{{ $item->id }}">
                 <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
-                    data-mydescription="{{$item->description}}" data-startDate="{{$item->startDate}}"
-                    data-dueDate="{{$item->dueDate}}" class="btn btn-sm" data-toggle="modal" data-target="#edit_task">
+                    data-mydescription="{{$item->description}}" class="btn btn-sm" data-toggle="modal"
+                    data-target="#edit_task">
                     <i class="material-icons">
                         edit
                     </i>
@@ -68,6 +83,13 @@
                     data-toggle="modal" data-target="#status_task">
                     <i class="material-icons">
                         bar_chart
+                    </i>
+                </button>
+
+                <button type="button" class="btn btn-sm" data-myid="{{$item->id}}" data-startDate="{{$item->startDate}}"
+                    data-dueDate="{{$item->dueDate}}" data-toggle="modal" data-target="#date_task">
+                    <i class="material-icons">
+                        calendar_today
                     </i>
                 </button>
 
@@ -265,6 +287,54 @@
     </div>
 </div>
 
+<div class="modal fade" id="date_task">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Add dates</h5><br>
+
+                <div class="modal-options">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">
+                        <i class="material-icons">
+                            close
+                        </i>
+                        <br>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <form method="POST" action="{{route('task.update', 'redirect')}}" class="was-validated">
+                {{method_field('PATCH')}}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="hidden" name="taskid" id="taskid" value="">
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" class="form-control form-control-sm" id="startDate" name="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date:</label>
+                        <input type="date" class="form-control form-control-sm" id="dueDate" name="dueDate">
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="material-icons">
+                                check
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $('#edit_task').on('show.bs.modal', function (event) {
 
@@ -273,19 +343,13 @@
         var title = button.data('mytitle')
         var description = button.data('mydescription')
         var status = button.data('mystatus')
-        var startDate = button.data('startDate')
-        var dueDate = button.data('dueDate')
         var modal = $(this)
 
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #title').val(title);
         modal.find('.modal-body #des').val(description);
         modal.find('.modal-body #status').val(status);
-        modal.find('.modal-body #startDate').val(startDate);
-        modal.find('.modal-body #dueDate').val(dueDate);
-
-
-
+        
     })
 
 
@@ -308,5 +372,18 @@
 
         modal.find('.modal-body #taskid').val(id);
         modal.find('.modal-body #status').val(status);
+    }) 
+
+    $('#date_task').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget)
+        var id = button.data('myid')
+        var startDate = button.data('startDate')
+        var dueDate = button.data('dueDate')
+        var modal = $(this)
+
+        modal.find('.modal-body #taskid').val(id);
+        modal.find('.modal-body #startDate').val(startDate);
+        modal.find('.modal-body #dueDate').val(dueDate);
     }) 
 </script>

@@ -38,9 +38,8 @@
                     aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="card-body">
-                <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
-                    data-mygroup="{{$item->group}}" data-startDate="{{$item->startDate}}" data-endDate="{{$item->endDate}}" class="btn btn-sm float-right" data-toggle="modal"
-                    data-target="#edit_project">
+                <button class="btn btn-sm float-right" type="button" data-toggle="collapse"
+                    data-target="#collapseFooter{{ $item->id }}" aria-expanded="false" aria-controls="collapseFooter">
                     <i class="material-icons">
                         more_vert
                     </i>
@@ -51,29 +50,42 @@
                         <h5 data-filter-by="text">{{$item->title}}</h5>
                     </a>
                     <span>{{$item->group}}</span>
-                    
+
                 </div>
-                
+
                 <div>
                     <span>Start: {{$item->startDate}} End: {{$item->endDate}}</span>
                 </div>
-
-                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal" data-target="#delete_project">
-                    <i class="material-icons">
-                        delete
-                    </i>
-                </button>
 
                 <ul class="avatars">
                     @foreach ($item->users as $assign)
                     <li>
                         @if ($assign->is_supervisor == 0)
-                        <img alt="" class="avatar" src="https://ui-avatars.com/api/?name={{$assign->first_name}}+{{$assign->last_name}}&rounded=true&size=25"/>
+                        <img alt="" class="avatar"
+                            src="https://ui-avatars.com/api/?name={{$assign->first_name}}+{{$assign->last_name}}&rounded=true&size=25" />
                         {{$assign->first_name}}
                         @endif
                     </li>
                     @endforeach
                 </ul>
+            </div>
+
+            <div class="card-footer collapse" id="collapseFooter{{ $item->id }}">
+                <button type="button" data-myid="{{$item->id}}" data-mytitle="{{$item->title}}"
+                    data-mygroup="{{$item->group}}" data-startDate="{{$item->startDate}}"
+                    data-endDate="{{$item->endDate}}" class="btn btn-sm" data-toggle="modal"
+                    data-target="#edit_project">
+                    <i class="material-icons">
+                        edit
+                    </i>
+                </button>
+
+                <button type="button" class="btn btn-sm float-right" data-myid="{{$item->id}}" data-toggle="modal"
+                    data-target="#delete_project">
+                    <i class="material-icons">
+                        delete
+                    </i>
+                </button>
             </div>
         </div>
     </div>

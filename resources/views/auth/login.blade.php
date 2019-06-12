@@ -58,7 +58,7 @@
             @endif
 
             <a class="btn btn-link" href="{{ route('password.request') }}">
-                {{ __('New student?') }}
+                {{ __('Validate account') }}
             </a>
 
             <p class="mt-5 mb-3 text-muted text-center"> 2019-Present</p>

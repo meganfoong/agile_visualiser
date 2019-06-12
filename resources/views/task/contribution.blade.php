@@ -1,35 +1,38 @@
+@if (!empty($alltaskF))
 @section('piechart')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+    function drawChart() {
+        var tasks = <?php echo json_encode($alltaskF); ?>;
+        var members = <?php echo json_encode($allmemberF); ?>;
+        var name = <?php echo json_encode($tname); ?>;
 
         var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
+            ['Member', 'Contribution'],
+            [members[0], tasks[0]],
+            [members[1], tasks[1]],
+            [members[2], tasks[2]],
+            [members[3], tasks[3]],
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+            title: name
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
-      }
+    }
 </script>
 @endsection
+@endif
 
 <div class="row content-list-head">
     <div class="col-auto">
-        <h3>Contribution</h3>
-
+        <h3>Task Contribution</h3>
     </div>
 </div>
 

@@ -19,9 +19,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.
@@ -29,9 +27,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {
-        
-    }
+    { }
 
     /**
      * Store a newly created resource in storage.
@@ -44,14 +40,14 @@ class ProjectController extends Controller
         //dd($request);
         if ($request->store == 1) {
             $comment = Comment::create(collect($request)->except('store')->toArray());
-            return back(); 
+            return back();
         }
 
         $project = Project::create($request->all());
 
         $project->users()->sync($request->student);
 
-        return back(); 
+        return back();
     }
 
     /**
@@ -62,37 +58,57 @@ class ProjectController extends Controller
      */
     public function show(Project $projects, Task $tasks, $id)
     {
-    
+
         $tasks = Task::with('projects')->where('project_id', $id)->where('parent_id', null)->get();
-        
+
         $projects = Project::get()->where('id', $id);
-        
+
         $projectid = Project::with('comments', 'users')->where('id', $id)->get();
         foreach ($projectid as $item1) {
             $pid = $item1->id;
             $uid = $item1->users;
+            $pname = $item1->title;
         }
-        
+
         $activities = Activity::with('projects')->where('project_id', $id)->orderBy('created_at', 'desc')->get();
-        //dd($activities);
+
         $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
 
-        if (!empty($comments) && !empty($activities)) {
-            return view('project.index',compact('tasks', 'pid', 'activities', 'comments', 'projects', 'uid' ));
+        $userCounts = Task::where('project_id', $id)->whereNotNull('parent_id')->wherenotNUll('assign')->get();
+
+        $members = User::join('tasks', 'users.id', 'tasks.assign')->select('users.first_name')->distinct()->get();
+
+        foreach ($userCounts as $user) {
+            $alluserCountdata[] = $user->assign;
         }
-        elseif (!empty($comments) && empty($activities)) {
-            return view('project.index',compact('tasks', 'pid', 'comments', 'projects', 'uid' ));
-        } 
-        elseif (!empty($activities) && empty($comments)) {
-            return view('project.index',compact('tasks', 'pid', 'activities', 'projects', 'uid' ));
-        } 
-        
 
-        
-        
+        if (!empty($alluserCountdata)) {
+            $alltasks = array_count_values($alluserCountdata);
 
-        //dd($aid);
-        //return view('project.index',compact('tasks', 'pid', 'comments', 'activities', 'projects', 'uid' ));
+
+            foreach ($alltasks as $alltask) {
+                $alltaskF[] = $alltask;
+            }
+
+            foreach ($members as $member) {
+                $allmemberF[] = $member->first_name;
+            }
+        }
+        if (!empty($comments) && !empty($activities) && !empty($alltasks)) {
+            return view('project.index', compact('tasks', 'pid', 'activities', 'comments', 'projects', 'uid', 'alltaskF', 'allmemberF', 'pname'));
+        } elseif (!empty($comments) && empty($activities) && empty($alltasks)) {
+            return view('project.index', compact('tasks', 'pid', 'comments', 'projects', 'uid'));
+        } elseif (!empty($activities) && empty($comments) && empty($alltasks)) {
+            return view('project.index', compact('tasks', 'pid', 'activities', 'projects', 'uid'));
+        } elseif (!empty($comments) && empty($activities) && !empty($alltasks)) {
+            return view('project.index', compact('tasks', 'pid', 'comments', 'projects', 'uid', 'alltaskF', 'allmemberF', 'pname'));
+        } elseif (!empty($activities) && empty($comments) && !empty($alltasks)) {
+            return view('project.index', compact('tasks', 'pid', 'activities', 'projects', 'uid', 'alltaskF', 'allmemberF', 'pname'));
+        } elseif (empty($comments) && empty($activities) && !empty($alltasks)) {
+            return view('project.index', compact('tasks', 'pid', 'uid', 'alltaskF', 'allmemberF', 'pname')); 
+        } else {
+            return view('project.index', compact('tasks', 'pid', 'projects', 'uid'));
+        }
     }
 
     /**
@@ -120,7 +136,7 @@ class ProjectController extends Controller
         $project->update($request->all());
 
         $project->users()->sync($request->student);
-       
+
         return back();
     }
 
@@ -135,7 +151,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($request->projectid);
 
         $project->delete();
-       
+
         return back();
     }
 }
