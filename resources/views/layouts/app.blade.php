@@ -31,7 +31,8 @@
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
 
-    @yield('piechart')
+    @yield('piechartproject')
+    @yield('piecharttask')
 </head>
 
 <body>

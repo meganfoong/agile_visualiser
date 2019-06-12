@@ -74,9 +74,9 @@ class ProjectController extends Controller
 
         $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
 
-        $userCounts = Task::where('project_id', $id)->whereNotNull('parent_id')->wherenotNUll('assign')->get();
+        $userCounts = Task::where('project_id', $pid)->whereNotNull('parent_id')->wherenotNUll('assign')->get();
 
-        $members = User::join('tasks', 'users.id', 'tasks.assign')->select('users.first_name')->distinct()->get();
+        $members = User::has('projects')->join('tasks', 'users.id', 'tasks.assign')->select('users.first_name')->distinct()->get();
 
         foreach ($userCounts as $user) {
             $alluserCountdata[] = $user->assign;

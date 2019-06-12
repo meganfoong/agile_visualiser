@@ -30,7 +30,7 @@ class CreateTasksTable extends Migration
                   ->references('id')->on('tasks')
                   ->onDelete('cascade');
 
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');;
         });
     }
 
