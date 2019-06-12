@@ -71,10 +71,10 @@
         <a class="nav-item nav-link" id="nav-tasks-tab" data-toggle="tab" href="#nav-tasks" role="tab"
             aria-controls="nav-tasks" aria-selected="false">Tasks</a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-item nav-link" id="nav-contribution-tab" data-toggle="tab" href="#nav-contribution" role="tab"
             aria-controls="nav-contribution" aria-selected="false">Contribution</a>
-    </li>
+    </li> --}}
 
 </ul>
 @endsection
