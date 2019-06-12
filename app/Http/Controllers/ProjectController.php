@@ -74,38 +74,32 @@ class ProjectController extends Controller
 
         $comments = Comment::with('projects', 'users')->where('project_id', $pid)->get();
 
-        $userCounts = Task::where('project_id', $pid)->whereNotNull('parent_id')->wherenotNUll('assign')->get();
+        // $userCounts = Task::where('project_id', $pid)->whereNotNull('parent_id')->wherenotNUll('assign')->get();
 
-        $members = User::has('projects')->join('tasks', 'users.id', 'tasks.assign')->select('users.first_name')->distinct()->get();
+        // $members = User::has('projects')->join('tasks', 'users.id', 'tasks.assign')->select('users.first_name')->distinct()->get();
 
-        foreach ($userCounts as $user) {
-            $alluserCountdata[] = $user->assign;
-        }
+        // foreach ($userCounts as $user) {
+        //     $alluserCountdata[] = $user->assign;
+        // }
 
-        if (!empty($alluserCountdata)) {
-            $alltasks = array_count_values($alluserCountdata);
+        // if (!empty($alluserCountdata)) {
+        //     $alltasks = array_count_values($alluserCountdata);
 
 
-            foreach ($alltasks as $alltask) {
-                $alltaskF[] = $alltask;
-            }
+        //     foreach ($alltasks as $alltask) {
+        //         $alltaskF[] = $alltask;
+        //     }
 
-            foreach ($members as $member) {
-                $allmemberF[] = $member->first_name;
-            }
-        }
-        if (!empty($comments) && !empty($activities) && !empty($alltasks)) {
-            return view('project.index', compact('tasks', 'pid', 'activities', 'comments', 'projects', 'uid', 'alltaskF', 'allmemberF', 'pname'));
-        } elseif (!empty($comments) && empty($activities) && empty($alltasks)) {
+        //     foreach ($members as $member) {
+        //         $allmemberF[] = $member->first_name;
+        //     }
+        // }
+        if (!empty($comments) && !empty($activities)) {
+            return view('project.index', compact('tasks', 'pid', 'activities', 'comments', 'projects', 'uid'));
+        } elseif (!empty($comments) && empty($activities)) {
             return view('project.index', compact('tasks', 'pid', 'comments', 'projects', 'uid'));
-        } elseif (!empty($activities) && empty($comments) && empty($alltasks)) {
+        } elseif (!empty($activities) && empty($comments)) {
             return view('project.index', compact('tasks', 'pid', 'activities', 'projects', 'uid'));
-        } elseif (!empty($comments) && empty($activities) && !empty($alltasks)) {
-            return view('project.index', compact('tasks', 'pid', 'comments', 'projects', 'uid', 'alltaskF', 'allmemberF', 'pname'));
-        } elseif (!empty($activities) && empty($comments) && !empty($alltasks)) {
-            return view('project.index', compact('tasks', 'pid', 'activities', 'projects', 'uid', 'alltaskF', 'allmemberF', 'pname'));
-        } elseif (empty($comments) && empty($activities) && !empty($alltasks)) {
-            return view('project.index', compact('tasks', 'pid', 'uid', 'alltaskF', 'allmemberF', 'pname')); 
         } else {
             return view('project.index', compact('tasks', 'pid', 'projects', 'uid'));
         }
