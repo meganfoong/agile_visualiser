@@ -24,7 +24,10 @@ class SupervisorController extends Controller
 
     public function index()
     {
+        //To display projects of supervisor that is logged in
         $projects = Auth::user()->projects;
+
+        //To display the list of students added by the supervisor either through CSV or manual entry
         $students = User::where('parent_id', Auth::user()->id)->get();
 
         return view('supervisor.index', compact('projects', 'students'));
@@ -48,6 +51,7 @@ class SupervisorController extends Controller
      */
     public function store(Request $request)
     {
+        //Uses project id from form to display the appropriate dashboad which also allows them to comment
         if (!empty($request->projectid)) {
             $projects = Auth::user()->projects;
             $students = User::where('parent_id', Auth::user()->id)->get();
@@ -71,6 +75,7 @@ class SupervisorController extends Controller
             }
         }
 
+        //Creates a single user when manual entering a user
         if (!empty($request->single)) {
             $student = User::create($request->all());
 
@@ -78,7 +83,7 @@ class SupervisorController extends Controller
         }
 
 
-
+        //Code for reading csv and adding to the database
         if ($request->input('submit') != null) {
 
             $file = $request->file('file');
